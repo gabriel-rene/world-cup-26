@@ -1,0 +1,37 @@
+"use client";
+
+import { useState } from "react";
+import { VariablePicker } from "@/components/VariablePicker";
+import { CorrelationCard } from "@/components/CorrelationCard";
+import { variablesForScope } from "@/lib/registry";
+import { rowsForScope } from "@/lib/snapshot";
+import type { Scope } from "@/lib/scopes";
+
+export default function Explore() {
+  const [scope, setScope] = useState<Scope>("2026-team");
+  const [xKey, setXKey] = useState("gdpPerCapita");
+  const [yKey, setYKey] = useState("goalsFor");
+
+  const vars = variablesForScope(scope);
+  const xVar = vars.find((v) => v.key === xKey) ?? vars[0];
+  const yVar = vars.find((v) => v.key === yKey) ?? vars[1] ?? vars[0];
+  const labelKey = scope === "2026-team" ? "name" : "teamName";
+
+  const onScope = (s: Scope) => {
+    const next = variablesForScope(s);
+    setScope(s);
+    setXKey(next[0].key);
+    setYKey(next[1]?.key ?? next[0].key);
+  };
+
+  return (
+    <main style={{ maxWidth: 800, margin: "0 auto", padding: 24 }}>
+      <h1>Explorer</h1>
+      <VariablePicker
+        scope={scope} xKey={xVar.key} yKey={yVar.key}
+        onScope={onScope} onX={setXKey} onY={setYKey}
+      />
+      <CorrelationCard rows={rowsForScope(scope)} xVar={xVar} yVar={yVar} labelKey={labelKey} />
+    </main>
+  );
+}
