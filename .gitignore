@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# env / secrets (API-Football key lives here)
+.env
+.env*.local
+
+# raw ingestion cache (large, regenerable)
+/data/raw/
+
+# misc
+.DS_Store
+*.log
+.vercel
