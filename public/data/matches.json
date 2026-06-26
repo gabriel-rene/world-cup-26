@@ -1,0 +1,6 @@
+[
+  { "fixtureId": 100, "teamId": 1, "teamName": "Brazil", "opponentId": 2, "venue": "MetLife Stadium", "kickoffUtc": "2026-06-12T18:00:00+00:00", "goals": 2, "possession": 60, "shots": 14, "temperatureC": 26, "humidity": 50, "windKph": 12 },
+  { "fixtureId": 100, "teamId": 2, "teamName": "France", "opponentId": 1, "venue": "MetLife Stadium", "kickoffUtc": "2026-06-12T18:00:00+00:00", "goals": 1, "possession": 40, "shots": 9, "temperatureC": 26, "humidity": 50, "windKph": 12 },
+  { "fixtureId": 101, "teamId": 3, "teamName": "Japan", "opponentId": 4, "venue": "SoFi Stadium", "kickoffUtc": "2026-06-13T21:00:00+00:00", "goals": 1, "possession": 55, "shots": 11, "temperatureC": 31, "humidity": 35, "windKph": 8 },
+  { "fixtureId": 101, "teamId": 4, "teamName": "Morocco", "opponentId": 3, "venue": "SoFi Stadium", "kickoffUtc": "2026-06-13T21:00:00+00:00", "goals": 1, "possession": 45, "shots": 10, "temperatureC": 31, "humidity": 35, "windKph": 8 }
+]
