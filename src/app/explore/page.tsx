@@ -5,7 +5,7 @@ import { VariablePicker } from "@/components/VariablePicker";
 import { CorrelationCard } from "@/components/CorrelationCard";
 import { variablesForScope } from "@/lib/registry";
 import { rowsForScope } from "@/lib/snapshot";
-import type { Scope } from "@/lib/scopes";
+import { SCOPE_LABEL_FIELD, type Scope } from "@/lib/scopes";
 
 export default function Explore() {
   const [scope, setScope] = useState<Scope>("2026-team");
@@ -15,7 +15,7 @@ export default function Explore() {
   const vars = variablesForScope(scope);
   const xVar = vars.find((v) => v.key === xKey) ?? vars[0];
   const yVar = vars.find((v) => v.key === yKey) ?? vars[1] ?? vars[0];
-  const labelKey = scope === "2026-team" ? "name" : "teamName";
+  const labelKey = SCOPE_LABEL_FIELD[scope];
 
   const onScope = (s: Scope) => {
     const next = variablesForScope(s);

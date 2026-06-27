@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CorrelationCard } from "@/components/CorrelationCard";
 import { INSIGHTS, resolveInsight } from "./insights";
 import { rowsForScope } from "@/lib/snapshot";
+import { SCOPE_LABEL_FIELD } from "@/lib/scopes";
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
         {INSIGHTS.map((insight) => {
           const { xVar, yVar } = resolveInsight(insight);
-          const labelKey = insight.scope === "2026-team" ? "name" : "teamName";
+          const labelKey = SCOPE_LABEL_FIELD[insight.scope];
           return (
             <CorrelationCard
               key={insight.title}

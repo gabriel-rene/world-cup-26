@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid,
+  Scatter, XAxis, YAxis, ZAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Line, ComposedChart,
 } from "recharts";
 import { computeCorrelation, type Point } from "@/lib/correlation";
@@ -13,14 +13,14 @@ export interface CorrelationCardProps {
   rows: (TeamRow | MatchTeamRow)[];
   xVar: VariableDef;
   yVar: VariableDef;
-  labelKey: "name" | "teamName";
+  labelKey: string;
 }
 
 export function buildPoints(
   rows: (TeamRow | MatchTeamRow)[],
   xVar: VariableDef,
   yVar: VariableDef,
-  labelKey: "name" | "teamName",
+  labelKey: string,
 ): Point[] {
   const pts: Point[] = [];
   for (const row of rows) {
