@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { CorrelationCard } from "@/components/CorrelationCard";
 import { INSIGHTS, resolveInsight } from "./insights";

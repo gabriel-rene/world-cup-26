@@ -28,7 +28,7 @@ export function buildPoints(
     const y = yVar.accessor(row);
     if (x === null || y === null) continue;
     // Cast to Record<string, unknown> to read the label key dynamically
-    pts.push({ x, y, label: String((row as Record<string, unknown>)[labelKey] ?? "") });
+    pts.push({ x, y, label: String((row as unknown as Record<string, unknown>)[labelKey] ?? "") });
   }
   return pts;
 }
