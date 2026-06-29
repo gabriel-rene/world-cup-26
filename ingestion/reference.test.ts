@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { lookupVenue } from "./venues";
+import { lookupVenue, VENUES } from "./venues";
 import { toIso3 } from "./countries";
 
 describe("reference tables", () => {
@@ -18,5 +18,14 @@ describe("reference tables", () => {
     expect(toIso3("Brazil")).toBe("BRA");
     expect(toIso3("USA")).toBe("USA");
     expect(toIso3("Atlantis")).toBeNull();
+  });
+
+  it("covers 16 distinct host stadiums with finite coordinates", () => {
+    const distinct = new Set(Object.values(VENUES).map((v) => v.name));
+    expect(distinct.size).toBe(16);
+    for (const v of Object.values(VENUES)) {
+      expect(Number.isFinite(v.lat)).toBe(true);
+      expect(Number.isFinite(v.lon)).toBe(true);
+    }
   });
 });
