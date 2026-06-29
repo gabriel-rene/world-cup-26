@@ -12,7 +12,8 @@ export default function Home() {
       <h1>World Cup 2026 — Fun Correlations</h1>
       <p>
         Playful correlations between football data and public country data.{" "}
-        <Link href="/explore">Build your own →</Link> · <Link href="/about">Methodology</Link>
+        <Link href="/teams">Teams</Link> · <Link href="/explore">Build your own →</Link> ·{" "}
+        <Link href="/about">Methodology</Link>
       </p>
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
         {INSIGHTS.map((insight) => {
