@@ -21,7 +21,7 @@ describe("buildPoints", () => {
 
   it("attaches the country flag for team rows and empty for missing iso", () => {
     const pts = buildPoints(teams, xVar, yVar, "name");
-    expect(pts[0].flag).toBe("🇧🇷"); // teams[0].iso3 is overwritten below
+    expect(pts[0].flag).toBe("🇧🇷"); // BRA → 🇧🇷
   });
 });
 

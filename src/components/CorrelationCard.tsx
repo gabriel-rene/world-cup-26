@@ -41,6 +41,7 @@ export function buildPoints(
   return pts;
 }
 
+// Recharts' Tooltip content prop types payload entries' inner payload as optional
 interface CustomTooltipProps {
   active?: boolean;
   payload?: { payload?: Point }[];
