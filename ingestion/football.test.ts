@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseTeams, parseFixtures, parsePossession } from "./football";
+import { parseTeams, parseFixtures, parseStats } from "./football";
 
 describe("parseTeams", () => {
   it("extracts id/name/country", () => {
@@ -35,24 +35,35 @@ describe("parseFixtures", () => {
   });
 });
 
-describe("parsePossession", () => {
+describe("parseStats", () => {
   const statsJson = {
     response: [
       { team: { id: 1 }, statistics: [
         { type: "Ball Possession", value: "55%" },
         { type: "Total Shots", value: 12 },
+        { type: "Passes %", value: "88%" },
+        { type: "Yellow Cards", value: 2 },
+        { type: "Red Cards", value: 1 },
       ] },
       { team: { id: 2 }, statistics: [
         { type: "Ball Possession", value: "45%" },
         { type: "Total Shots", value: null },
+        { type: "Passes %", value: null },
+        { type: "Yellow Cards", value: null },
       ] },
     ],
   };
-  it("reads possession as a number and shots", () => {
-    expect(parsePossession(statsJson, 1)).toEqual({ possession: 55, shots: 12 });
+  it("reads possession, shots, pass accuracy, and total cards", () => {
+    expect(parseStats(statsJson, 1)).toEqual({
+      possession: 55, shots: 12, passAccuracy: 88, cards: 3,
+    });
   });
-  it("returns nulls for missing values", () => {
-    expect(parsePossession(statsJson, 2)).toEqual({ possession: 45, shots: null });
-    expect(parsePossession(statsJson, 999)).toEqual({ possession: null, shots: null });
+  it("returns nulls for missing values; cards is null when both card types absent", () => {
+    expect(parseStats(statsJson, 2)).toEqual({
+      possession: 45, shots: null, passAccuracy: null, cards: null,
+    });
+    expect(parseStats(statsJson, 999)).toEqual({
+      possession: null, shots: null, passAccuracy: null, cards: null,
+    });
   });
 });

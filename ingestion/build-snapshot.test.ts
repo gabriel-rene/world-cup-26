@@ -61,3 +61,33 @@ describe("buildSnapshot", () => {
     expect(snap.meta.sources.length).toBeGreaterThan(0);
   });
 });
+
+describe("buildTeams aggregates pass accuracy and cards", () => {
+  const inputs: RawInputs = {
+    teams: [{ teamId: 1, name: "Brazil", country: "Brazil" }],
+    fixtures: [
+      { fixtureId: 100, kickoffUtc: "2026-06-12T18:00:00+00:00", venue: "MetLife Stadium",
+        homeId: 1, awayId: 2, homeGoals: 2, awayGoals: 1 },
+    ],
+    statsByFixture: {
+      100: { response: [
+        { team: { id: 1 }, statistics: [
+          { type: "Ball Possession", value: "60%" },
+          { type: "Total Shots", value: 10 },
+          { type: "Passes %", value: "90%" },
+          { type: "Yellow Cards", value: 1 },
+          { type: "Red Cards", value: 0 },
+        ] },
+      ] },
+    },
+    weather: {},
+    worldbank: {},
+  };
+
+  it("fills passAccuracy and cards from stats instead of 0", () => {
+    const [brazil] = buildTeams(inputs);
+    expect(brazil.passAccuracy).toBe(90);
+    expect(brazil.cards).toBe(1);
+    expect(brazil.shots).toBe(10);
+  });
+});

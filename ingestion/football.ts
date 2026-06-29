@@ -37,19 +37,33 @@ export function parseFixtures(json: unknown): RawFixture[] {
     }));
 }
 
-export function parsePossession(
+export function parseStats(
   statsJson: unknown,
   teamId: number,
-): { possession: number | null; shots: number | null } {
+): {
+  possession: number | null;
+  shots: number | null;
+  passAccuracy: number | null;
+  cards: number | null;
+} {
   const entry = resp(statsJson).find((r) => r.team?.id === teamId);
-  if (!entry) return { possession: null, shots: null };
+  if (!entry) return { possession: null, shots: null, passAccuracy: null, cards: null };
   const stats: Array<{ type: string; value: unknown }> = entry.statistics ?? [];
   const find = (type: string) => stats.find((s) => s.type === type)?.value ?? null;
-  const possRaw = find("Ball Possession");
-  const possession = typeof possRaw === "string" ? Number(possRaw.replace("%", "")) : null;
-  const shotsRaw = find("Total Shots");
-  const shots = typeof shotsRaw === "number" ? shotsRaw : null;
-  return { possession, shots };
+
+  const pct = (raw: unknown) =>
+    typeof raw === "string" ? Number(raw.replace("%", "")) : null;
+  const num = (raw: unknown) => (typeof raw === "number" ? raw : null);
+
+  const possession = pct(find("Ball Possession"));
+  const shots = num(find("Total Shots"));
+  const passAccuracy = pct(find("Passes %"));
+
+  const yellow = num(find("Yellow Cards"));
+  const red = num(find("Red Cards"));
+  const cards = yellow === null && red === null ? null : (yellow ?? 0) + (red ?? 0);
+
+  return { possession, shots, passAccuracy, cards };
 }
 
 export async function apiGet(path: string, key: string, fetchFn: typeof fetch = fetch): Promise<unknown> {
