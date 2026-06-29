@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { lookupVenue, VENUES } from "./venues";
-import { toIso3 } from "./countries";
+import { toIso3, COUNTRY_ISO3 } from "./countries";
 
 describe("reference tables", () => {
   it("resolves a known host venue case-insensitively", () => {
@@ -27,5 +27,22 @@ describe("reference tables", () => {
       expect(Number.isFinite(v.lat)).toBe(true);
       expect(Number.isFinite(v.lon)).toBe(true);
     }
+  });
+
+  it("covers at least 48 distinct nations across confederations", () => {
+    const distinct = new Set(Object.values(COUNTRY_ISO3));
+    expect(distinct.size).toBeGreaterThanOrEqual(48);
+  });
+
+  it("resolves the hosts and a sample from each confederation", () => {
+    expect(toIso3("USA")).toBe("USA");
+    expect(toIso3("Canada")).toBe("CAN");
+    expect(toIso3("Mexico")).toBe("MEX");
+    expect(toIso3("Brazil")).toBe("BRA");
+    expect(toIso3("Japan")).toBe("JPN");
+    expect(toIso3("Morocco")).toBe("MAR");
+    expect(toIso3("Portugal")).toBe("PRT");
+    expect(toIso3("Senegal")).toBe("SEN");
+    expect(toIso3("Australia")).toBe("AUS");
   });
 });
