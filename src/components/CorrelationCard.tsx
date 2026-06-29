@@ -2,9 +2,10 @@
 
 import {
   Scatter, XAxis, YAxis, ZAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, Line, ComposedChart,
+  Tooltip, ResponsiveContainer, Line, ComposedChart, LabelList,
 } from "recharts";
 import { computeCorrelation, type Point } from "@/lib/correlation";
+import { flagEmoji } from "@/lib/flags";
 import type { VariableDef } from "@/lib/registry";
 import type { TeamRow, MatchTeamRow } from "@/lib/types";
 
@@ -27,10 +28,22 @@ export function buildPoints(
     const x = xVar.accessor(row);
     const y = yVar.accessor(row);
     if (x === null || y === null) continue;
-    // Cast to Record<string, unknown> to read the label key dynamically
-    pts.push({ x, y, label: String((row as unknown as Record<string, unknown>)[labelKey] ?? "") });
+    // Read the label key and iso3 dynamically; match rows have no iso3.
+    const record = row as unknown as Record<string, unknown>;
+    const iso3 = typeof record.iso3 === "string" ? (record.iso3 as string) : "";
+    pts.push({
+      x,
+      y,
+      label: String(record[labelKey] ?? ""),
+      flag: iso3 ? flagEmoji(iso3) : "",
+    });
   }
   return pts;
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: { payload?: Point }[];
 }
 
 export function CorrelationCard({ title, rows, xVar, yVar, labelKey }: CorrelationCardProps) {
@@ -46,6 +59,19 @@ export function CorrelationCard({ title, rows, xVar, yVar, labelKey }: Correlati
         { x: minX, y: slope * minX + intercept },
         { x: maxX, y: slope * maxX + intercept },
       ];
+
+  const renderTooltip = ({ active, payload }: CustomTooltipProps) => {
+    if (!active || !payload || payload.length === 0) return null;
+    const p = payload[0].payload;
+    if (!p) return null;
+    return (
+      <div style={{ background: "#fff", border: "1px solid #e3e3e3", borderRadius: 6, padding: "4px 8px", fontSize: 13 }}>
+        <div>{p.flag ? `${p.flag} ` : ""}{p.label}</div>
+        <div>{xVar.label}: {xVar.format(p.x)}</div>
+        <div>{yVar.label}: {yVar.format(p.y)}</div>
+      </div>
+    );
+  };
 
   return (
     <section style={{ border: "1px solid #e3e3e3", borderRadius: 12, padding: 16 }}>
@@ -64,13 +90,10 @@ export function CorrelationCard({ title, rows, xVar, yVar, labelKey }: Correlati
             <YAxis type="number" dataKey="y" name={yVar.label}
               tickFormatter={(v) => yVar.format(Number(v))} />
             <ZAxis range={[60, 60]} />
-            <Tooltip
-              formatter={(value: number, key: string) =>
-                key === "x" ? xVar.format(value) : yVar.format(value)
-              }
-              labelFormatter={() => ""}
-            />
-            <Scatter data={points} fill="#2563eb" />
+            <Tooltip content={renderTooltip} />
+            <Scatter data={points} fill="#2563eb">
+              <LabelList dataKey="flag" position="top" style={{ fontSize: 14 }} />
+            </Scatter>
             {line.length === 2 && (
               <Line data={line} dataKey="y" dot={false} stroke="#ef4444"
                 strokeWidth={2} isAnimationActive={false} legendType="none" />
