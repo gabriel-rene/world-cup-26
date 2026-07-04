@@ -20,12 +20,28 @@ describe("reference tables", () => {
     expect(toIso3("Atlantis")).toBeNull();
   });
 
-  it("covers 16 distinct host stadiums with finite coordinates", () => {
+  it("accepts API-Football's hyphenated country names", () => {
+    expect(toIso3("South-Korea")).toBe("KOR");
+    expect(toIso3("Saudi-Arabia")).toBe("SAU");
+    expect(toIso3("Costa-Rica")).toBe("CRI");
+  });
+
+  it("covers 24 distinct host stadiums (16 for 2026 + 8 for Qatar 2022) with finite coordinates", () => {
     const distinct = new Set(Object.values(VENUES).map((v) => v.name));
-    expect(distinct.size).toBe(16);
+    expect(distinct.size).toBe(24);
     for (const v of Object.values(VENUES)) {
       expect(Number.isFinite(v.lat)).toBe(true);
       expect(Number.isFinite(v.lon)).toBe(true);
+    }
+  });
+
+  it("resolves the Qatar 2022 stadiums, including the Lusail naming variants", () => {
+    for (const name of [
+      "Lusail Stadium", "Lusail Iconic Stadium", "Al Bayt Stadium", "Stadium 974",
+      "Al Thumama Stadium", "Khalifa International Stadium", "Education City Stadium",
+      "Ahmad Bin Ali Stadium", "Al Janoub Stadium",
+    ]) {
+      expect(lookupVenue(name), name).not.toBeNull();
     }
   });
 

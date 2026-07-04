@@ -44,6 +44,21 @@ export const VENUES: Record<string, VenueCoord> = {
   "guadalajara": { name: "Estadio Akron", lat: 20.6817, lon: -103.4626 },
   "estadio bbva": { name: "Estadio BBVA", lat: 25.6694, lon: -100.2444 },
   "monterrey": { name: "Estadio BBVA", lat: 25.6694, lon: -100.2444 },
+  // Qatar (World Cup 2022)
+  "lusail stadium": { name: "Lusail Stadium", lat: 25.4204, lon: 51.4903 },
+  "lusail iconic stadium": { name: "Lusail Stadium", lat: 25.4204, lon: 51.4903 },
+  "lusail": { name: "Lusail Stadium", lat: 25.4204, lon: 51.4903 },
+  "al bayt stadium": { name: "Al Bayt Stadium", lat: 25.6525, lon: 51.4875 },
+  "al khor": { name: "Al Bayt Stadium", lat: 25.6525, lon: 51.4875 },
+  "stadium 974": { name: "Stadium 974", lat: 25.2897, lon: 51.5686 },
+  "ras abu aboud stadium": { name: "Stadium 974", lat: 25.2897, lon: 51.5686 },
+  "al thumama stadium": { name: "Al Thumama Stadium", lat: 25.2314, lon: 51.5311 },
+  "khalifa international stadium": { name: "Khalifa International Stadium", lat: 25.2636, lon: 51.4481 },
+  "education city stadium": { name: "Education City Stadium", lat: 25.3111, lon: 51.4247 },
+  "ahmad bin ali stadium": { name: "Ahmad Bin Ali Stadium", lat: 25.3297, lon: 51.3428 },
+  "al rayyan stadium": { name: "Ahmad Bin Ali Stadium", lat: 25.3297, lon: 51.3428 },
+  "al janoub stadium": { name: "Al Janoub Stadium", lat: 25.1594, lon: 51.5744 },
+  "al wakrah": { name: "Al Janoub Stadium", lat: 25.1594, lon: 51.5744 },
 };
 
 export function lookupVenue(name: string): VenueCoord | null {

@@ -28,5 +28,7 @@ export const COUNTRY_ISO3: Record<string, string> = {
 
 export function toIso3(country: string): string | null {
   if (!country) return null;
-  return COUNTRY_ISO3[country.trim()] ?? null;
+  // API-Football hyphenates multi-word country names ("South-Korea").
+  const name = country.trim().replace(/-/g, " ");
+  return COUNTRY_ISO3[name] ?? null;
 }
