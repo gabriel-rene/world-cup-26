@@ -1,5 +1,26 @@
 import { describe, it, expect } from "vitest";
-import { parseIndicator, fetchCountryStats } from "./worldbank";
+import { parseIndicator, fetchCountryStats, mergeCountryStats, type CountryStats } from "./worldbank";
+
+describe("mergeCountryStats", () => {
+  const old: CountryStats = { iso3: "BRA", population: 211e6, gdp: 2e12, gdpPerCapita: 9500, landArea: 8.5e6 };
+
+  it("prefers fresh non-null values", () => {
+    const fresh: CountryStats = { iso3: "BRA", population: 212e6, gdp: null, gdpPerCapita: null, landArea: null };
+    expect(mergeCountryStats(old, fresh)).toEqual({
+      iso3: "BRA", population: 212e6, gdp: 2e12, gdpPerCapita: 9500, landArea: 8.5e6,
+    });
+  });
+
+  it("keeps known-good cached values when a fetch comes back all-null (API outage)", () => {
+    const fresh: CountryStats = { iso3: "BRA", population: null, gdp: null, gdpPerCapita: null, landArea: null };
+    expect(mergeCountryStats(old, fresh)).toEqual(old);
+  });
+
+  it("works with no cached entry", () => {
+    const fresh: CountryStats = { iso3: "QAT", population: 2.7e6, gdp: null, gdpPerCapita: null, landArea: null };
+    expect(mergeCountryStats(undefined, fresh)).toEqual(fresh);
+  });
+});
 
 const wbResponse = (value: number | null) => [
   { page: 1, pages: 1 },
