@@ -1,5 +1,45 @@
 import { describe, it, expect } from "vitest";
-import { parseTeams, parseFixtures, parseStats } from "./football";
+import { parseTeams, parseFixtures, parseStats, apiGet, resolveSeason } from "./football";
+
+function fakeFetch(payload: unknown): typeof fetch {
+  return (async () => ({ ok: true, json: async () => payload })) as unknown as typeof fetch;
+}
+
+describe("apiGet", () => {
+  it("throws when the body carries an API error (200 + errors.plan)", async () => {
+    const payload = {
+      errors: { plan: "Free plans do not have access to this season, try from 2022 to 2024." },
+      response: [],
+    };
+    await expect(apiGet("/teams?league=1&season=2026", "k", fakeFetch(payload)))
+      .rejects.toThrow(/Free plans do not have access/);
+  });
+
+  it("throws when the body carries a rate-limit error (200 + errors.requests)", async () => {
+    const payload = {
+      errors: { requests: "You have reached the request limit for the day." },
+      response: [],
+    };
+    await expect(apiGet("/fixtures?league=1&season=2022", "k", fakeFetch(payload)))
+      .rejects.toThrow(/request limit/);
+  });
+
+  it("returns the payload when errors is an empty array or object", async () => {
+    const ok = { errors: [], response: [{ team: { id: 1 } }] };
+    await expect(apiGet("/teams", "k", fakeFetch(ok))).resolves.toEqual(ok);
+    const okObj = { errors: {}, response: [] };
+    await expect(apiGet("/teams", "k", fakeFetch(okObj))).resolves.toEqual(okObj);
+  });
+});
+
+describe("resolveSeason", () => {
+  it("defaults to 2022 (the latest World Cup the free tier can access)", () => {
+    expect(resolveSeason({})).toBe(2022);
+  });
+  it("honors a WC_SEASON override", () => {
+    expect(resolveSeason({ WC_SEASON: "2026" })).toBe(2026);
+  });
+});
 
 describe("parseTeams", () => {
   it("extracts id/name/country", () => {
