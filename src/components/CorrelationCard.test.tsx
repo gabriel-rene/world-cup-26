@@ -8,8 +8,8 @@ const teams: TeamRow[] = [
   { teamId: 1, name: "A", iso3: "BRA", goalsFor: 8, goalsAgainst: 1, shots: 50, passAccuracy: 85, cards: 3, avgPossession: 55, matchesPlayed: 3, population: 1e6, gdp: 1e10, gdpPerCapita: 10000, landArea: 1000 },
   { teamId: 2, name: "B", iso3: "FRA", goalsFor: 4, goalsAgainst: 4, shots: 30, passAccuracy: 80, cards: 5, avgPossession: 48, matchesPlayed: 3, population: 2e6, gdp: 8e10, gdpPerCapita: 40000, landArea: 2000 },
 ];
-const xVar = VARIABLES.find((v) => v.key === "gdpPerCapita" && v.scope === "2026-team")!;
-const yVar = VARIABLES.find((v) => v.key === "goalsFor" && v.scope === "2026-team")!;
+const xVar = VARIABLES.find((v) => v.key === "gdpPerCapita" && v.scope === "team")!;
+const yVar = VARIABLES.find((v) => v.key === "goalsFor" && v.scope === "team")!;
 
 describe("buildPoints", () => {
   it("maps rows to labeled points and drops nulls", () => {

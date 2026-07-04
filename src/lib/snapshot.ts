@@ -13,5 +13,5 @@ export function getMatches(): MatchTeamRow[] { return matches; }
 export function getMeta(): Meta { return meta; }
 
 export function rowsForScope(scope: Scope): (TeamRow | MatchTeamRow)[] {
-  return scope === "2026-team" ? teams : matches;
+  return scope === "team" ? teams : matches;
 }

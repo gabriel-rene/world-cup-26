@@ -4,7 +4,7 @@ import { SortableTable } from "./SortableTable";
 import { variablesForScope } from "@/lib/registry";
 import type { TeamRow } from "@/lib/types";
 
-const columns = variablesForScope("2026-team");
+const columns = variablesForScope("team");
 
 const rows: TeamRow[] = [
   { teamId: 1, name: "Argentina", iso3: "ARG", goalsFor: 8, goalsAgainst: 1, shots: 50, passAccuracy: 85, cards: 3, avgPossession: 55, matchesPlayed: 3, population: 1e6, gdp: 1e10, gdpPerCapita: 10000, landArea: 1000 },
@@ -14,7 +14,7 @@ const rows: TeamRow[] = [
 describe("SortableTable", () => {
   it("derives column headers from the registry", () => {
     render(<SortableTable rows={rows} columns={columns} />);
-    // "Goals scored" is the registry label for the 2026-team goalsFor variable.
+    // "Goals scored" is the registry label for the team goalsFor variable.
     expect(screen.getByRole("columnheader", { name: /Goals scored/ })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: /Nation/ })).toBeInTheDocument();
   });

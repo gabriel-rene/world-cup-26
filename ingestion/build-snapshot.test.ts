@@ -54,11 +54,18 @@ describe("buildMatches", () => {
 
 describe("buildSnapshot", () => {
   it("assembles teams, matches, and meta with timestamp", () => {
-    const snap = buildSnapshot(inputs, "2026-06-25T00:00:00Z");
+    const snap = buildSnapshot(inputs, "2026-06-25T00:00:00Z", 2022);
     expect(snap.teams).toHaveLength(2);
     expect(snap.matches).toHaveLength(2);
     expect(snap.meta.generatedAt).toBe("2026-06-25T00:00:00Z");
     expect(snap.meta.sources.length).toBeGreaterThan(0);
+  });
+
+  it("labels the snapshot with the ingested tournament", () => {
+    expect(buildSnapshot(inputs, "2026-06-25T00:00:00Z", 2022).meta.tournament)
+      .toBe("FIFA World Cup 2022");
+    expect(buildSnapshot(inputs, "2026-06-25T00:00:00Z", 2026).meta.tournament)
+      .toBe("FIFA World Cup 2026");
   });
 });
 

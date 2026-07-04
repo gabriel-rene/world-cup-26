@@ -8,7 +8,7 @@ export default function About() {
       <h1>Methodology</h1>
       <p><Link href="/">← Home</Link></p>
       <p>
-        This site shows <strong>fun</strong> correlations between World Cup 2026 football
+        This site shows <strong>fun</strong> correlations between {meta.tournament} football
         data and public country data. They are descriptive, not predictive.
       </p>
       <h2>Caveats</h2>

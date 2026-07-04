@@ -6,7 +6,7 @@ import { variablesForScope } from "@/lib/registry";
 import { getTeams } from "@/lib/snapshot";
 
 export default function Teams() {
-  const columns = variablesForScope("2026-team");
+  const columns = variablesForScope("team");
   const teams = getTeams();
   return (
     <main style={{ maxWidth: 1100, margin: "0 auto", padding: 24 }}>

@@ -6,7 +6,7 @@ describe("VariablePicker", () => {
   it("renders scope/X/Y selects and fires callbacks", () => {
     const onScope = vi.fn(), onX = vi.fn(), onY = vi.fn();
     render(
-      <VariablePicker scope="2026-team" xKey="gdpPerCapita" yKey="goalsFor"
+      <VariablePicker scope="team" xKey="gdpPerCapita" yKey="goalsFor"
         onScope={onScope} onX={onX} onY={onY} />,
     );
     const selects = screen.getAllByRole("combobox");

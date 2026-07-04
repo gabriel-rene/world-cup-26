@@ -32,6 +32,7 @@ export interface MatchTeamRow {
 
 export interface Meta {
   generatedAt: string;
+  tournament: string;
   sources: { name: string; url: string }[];
   caveats: string[];
 }

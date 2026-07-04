@@ -9,7 +9,7 @@ import { rowsForScope } from "@/lib/snapshot";
 import { SCOPE_LABEL_FIELD, type Scope } from "@/lib/scopes";
 
 export default function Explore() {
-  const [scope, setScope] = useState<Scope>("2026-team");
+  const [scope, setScope] = useState<Scope>("team");
   const [xKey, setXKey] = useState("gdpPerCapita");
   const [yKey, setYKey] = useState("goalsFor");
 

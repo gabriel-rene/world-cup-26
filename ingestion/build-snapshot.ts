@@ -1,5 +1,5 @@
 import { writeFileSync, mkdirSync, readFileSync, existsSync } from "node:fs";
-import { parseStats, type RawTeam, type RawFixture, parseTeams, parseFixtures } from "./football";
+import { parseStats, type RawTeam, type RawFixture, parseTeams, parseFixtures, resolveSeason } from "./football";
 import type { CountryStats } from "./worldbank";
 import type { WeatherAtKickoff } from "./weather";
 import { toIso3 } from "./countries";
@@ -81,9 +81,10 @@ export function buildMatches(inputs: RawInputs): MatchTeamRow[] {
   return rows;
 }
 
-export function buildMeta(generatedAt: string): Meta {
+export function buildMeta(generatedAt: string, season: number): Meta {
   return {
     generatedAt,
+    tournament: `FIFA World Cup ${season}`,
     sources: [
       { name: "API-Football", url: "https://www.api-football.com/" },
       { name: "World Bank", url: "https://data.worldbank.org/" },
@@ -91,16 +92,16 @@ export function buildMeta(generatedAt: string): Meta {
     ],
     caveats: [
       "Fun correlations only — correlation does not imply causation.",
-      "Small sample (~48 teams / one tournament); r values are noisy.",
+      "Small sample (one tournament); r values are noisy.",
     ],
   };
 }
 
-export function buildSnapshot(inputs: RawInputs, generatedAt: string): Snapshot {
+export function buildSnapshot(inputs: RawInputs, generatedAt: string, season: number): Snapshot {
   return {
     teams: buildTeams(inputs),
     matches: buildMatches(inputs),
-    meta: buildMeta(generatedAt),
+    meta: buildMeta(generatedAt, season),
   };
 }
 
@@ -121,6 +122,7 @@ function main() {
   const snap = buildSnapshot(
     { teams, fixtures, statsByFixture, weather, worldbank },
     new Date().toISOString(),
+    resolveSeason(process.env),
   );
 
   mkdirSync("public/data", { recursive: true });

@@ -1,4 +1,6 @@
-export const metadata = { title: "World Cup 2026 — Fun Correlations" };
+import { getMeta } from "@/lib/snapshot";
+
+export const metadata = { title: `${getMeta().tournament} — Fun Correlations` };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -9,10 +9,10 @@ export interface Insight {
 }
 
 export const INSIGHTS: Insight[] = [
-  { title: "Do richer nations score more?", scope: "2026-team", xKey: "gdpPerCapita", yKey: "goalsFor" },
-  { title: "Bigger countries, more goals?", scope: "2026-team", xKey: "population", yKey: "goalsFor" },
-  { title: "Does the heat kill possession?", scope: "2026-match", xKey: "temperatureC", yKey: "possession" },
-  { title: "More possession, more shots?", scope: "2026-match", xKey: "possession", yKey: "shots" },
+  { title: "Do richer nations score more?", scope: "team", xKey: "gdpPerCapita", yKey: "goalsFor" },
+  { title: "Bigger countries, more goals?", scope: "team", xKey: "population", yKey: "goalsFor" },
+  { title: "Does the heat kill possession?", scope: "match", xKey: "temperatureC", yKey: "possession" },
+  { title: "More possession, more shots?", scope: "match", xKey: "possession", yKey: "shots" },
 ];
 
 export function resolveInsight(i: Insight) {
