@@ -48,27 +48,15 @@ export function SortableTable({ rows, columns }: SortableTableProps) {
   const arrow = (key: string) =>
     key === sortKey ? (sortDir === "asc" ? " ▲" : " ▼") : "";
 
-  const th: React.CSSProperties = {
-    cursor: "pointer",
-    padding: 8,
-    borderBottom: "2px solid #e3e3e3",
-    whiteSpace: "nowrap",
-  };
-  const td: React.CSSProperties = { padding: 8, borderBottom: "1px solid #f0f0f0" };
-
   return (
-    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+    <table className="stat-table">
       <thead>
         <tr>
-          <th style={{ ...th, textAlign: "left" }} onClick={() => onSort(NAME_KEY)}>
+          <th style={{ textAlign: "left" }} onClick={() => onSort(NAME_KEY)}>
             Nation{arrow(NAME_KEY)}
           </th>
           {columns.map((c) => (
-            <th
-              key={c.key}
-              style={{ ...th, textAlign: "right" }}
-              onClick={() => onSort(c.key)}
-            >
+            <th key={c.key} className="num" onClick={() => onSort(c.key)}>
               {c.label}
               {arrow(c.key)}
             </th>
@@ -78,14 +66,14 @@ export function SortableTable({ rows, columns }: SortableTableProps) {
       <tbody>
         {sorted.map((row) => (
           <tr key={row.teamId}>
-            <td style={{ ...td, textAlign: "left" }}>
-              <span style={{ marginRight: 8 }}>{flagEmoji(row.iso3)}</span>
+            <td>
+              <span className="flag">{flagEmoji(row.iso3)}</span>
               {row.name}
             </td>
             {columns.map((c) => {
               const v = c.accessor(row);
               return (
-                <td key={c.key} style={{ ...td, textAlign: "right" }}>
+                <td key={c.key} className="num">
                   {v === null ? "—" : c.format(v)}
                 </td>
               );
