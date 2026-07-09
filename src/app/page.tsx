@@ -3,16 +3,17 @@
 import Link from "next/link";
 import { CorrelationCard } from "@/components/CorrelationCard";
 import { INSIGHTS, resolveInsight } from "./insights";
-import { rowsForScope } from "@/lib/snapshot";
+import { rowsForScope, getMeta } from "@/lib/snapshot";
 import { SCOPE_LABEL_FIELD } from "@/lib/scopes";
 
 export default function Home() {
   return (
     <main style={{ maxWidth: 960, margin: "0 auto", padding: 24 }}>
-      <h1>World Cup 2026 — Fun Correlations</h1>
+      <h1>{getMeta().tournament} — Fun Correlations</h1>
       <p>
         Playful correlations between football data and public country data.{" "}
-        <Link href="/explore">Build your own →</Link> · <Link href="/about">Methodology</Link>
+        <Link href="/teams">Teams</Link> · <Link href="/explore">Build your own →</Link> ·{" "}
+        <Link href="/about">Methodology</Link>
       </p>
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
         {INSIGHTS.map((insight) => {

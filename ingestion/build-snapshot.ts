@@ -1,5 +1,5 @@
 import { writeFileSync, mkdirSync, readFileSync, existsSync } from "node:fs";
-import { parsePossession, type RawTeam, type RawFixture, parseTeams, parseFixtures } from "./football";
+import { parseStats, type RawTeam, type RawFixture, parseTeams, parseFixtures, resolveSeason } from "./football";
 import type { CountryStats } from "./worldbank";
 import type { WeatherAtKickoff } from "./weather";
 import { toIso3 } from "./countries";
@@ -19,8 +19,8 @@ export function buildTeams(inputs: RawInputs): TeamRow[] {
   return inputs.teams.map((t) => {
     const iso3 = toIso3(t.country);
     const wb = iso3 ? inputs.worldbank[iso3] : undefined;
-    let goalsFor = 0, goalsAgainst = 0, shots = 0, cards = 0, possSum = 0, matchesPlayed = 0;
-    let passAcc = 0; // reserved; pass accuracy not in v1 stats parse -> stays 0 until added
+    let goalsFor = 0, goalsAgainst = 0, shots = 0, cardsSum = 0, cardsCount = 0, possSum = 0, matchesPlayed = 0;
+    let passAccSum = 0, passAccCount = 0;
 
     for (const fx of inputs.fixtures) {
       const isHome = fx.homeId === t.teamId;
@@ -29,17 +29,20 @@ export function buildTeams(inputs: RawInputs): TeamRow[] {
       matchesPlayed += 1;
       goalsFor += isHome ? fx.homeGoals : fx.awayGoals;
       goalsAgainst += isHome ? fx.awayGoals : fx.homeGoals;
-      const { possession, shots: s } = parsePossession(inputs.statsByFixture[fx.fixtureId], t.teamId);
-      if (possession !== null) possSum += possession;
-      if (s !== null) shots += s;
+      const stats = parseStats(inputs.statsByFixture[fx.fixtureId], t.teamId);
+      if (stats.possession !== null) possSum += stats.possession;
+      if (stats.shots !== null) shots += stats.shots;
+      if (stats.cards !== null) { cardsSum += stats.cards; cardsCount += 1; }
+      if (stats.passAccuracy !== null) { passAccSum += stats.passAccuracy; passAccCount += 1; }
     }
 
     return {
       teamId: t.teamId,
       name: t.name,
       iso3: iso3 ?? "",
-      goalsFor, goalsAgainst, shots, cards,
-      passAccuracy: passAcc,
+      goalsFor, goalsAgainst, shots,
+      cards: cardsCount > 0 ? cardsSum : null,
+      passAccuracy: passAccCount > 0 ? passAccSum / passAccCount : null,
       avgPossession: matchesPlayed > 0 ? possSum / matchesPlayed : 0,
       matchesPlayed,
       population: wb?.population ?? null,
@@ -59,7 +62,7 @@ export function buildMatches(inputs: RawInputs): MatchTeamRow[] {
       const teamId = side === "home" ? fx.homeId : fx.awayId;
       const opponentId = side === "home" ? fx.awayId : fx.homeId;
       const goals = side === "home" ? fx.homeGoals : fx.awayGoals;
-      const { possession, shots } = parsePossession(inputs.statsByFixture[fx.fixtureId], teamId);
+      const { possession, shots } = parseStats(inputs.statsByFixture[fx.fixtureId], teamId);
       rows.push({
         fixtureId: fx.fixtureId,
         teamId,
@@ -79,9 +82,10 @@ export function buildMatches(inputs: RawInputs): MatchTeamRow[] {
   return rows;
 }
 
-export function buildMeta(generatedAt: string): Meta {
+export function buildMeta(generatedAt: string, season: number): Meta {
   return {
     generatedAt,
+    tournament: `FIFA World Cup ${season}`,
     sources: [
       { name: "API-Football", url: "https://www.api-football.com/" },
       { name: "World Bank", url: "https://data.worldbank.org/" },
@@ -89,16 +93,16 @@ export function buildMeta(generatedAt: string): Meta {
     ],
     caveats: [
       "Fun correlations only — correlation does not imply causation.",
-      "Small sample (~48 teams / one tournament); r values are noisy.",
+      "Small sample (one tournament); r values are noisy.",
     ],
   };
 }
 
-export function buildSnapshot(inputs: RawInputs, generatedAt: string): Snapshot {
+export function buildSnapshot(inputs: RawInputs, generatedAt: string, season: number): Snapshot {
   return {
     teams: buildTeams(inputs),
     matches: buildMatches(inputs),
-    meta: buildMeta(generatedAt),
+    meta: buildMeta(generatedAt, season),
   };
 }
 
@@ -119,6 +123,7 @@ function main() {
   const snap = buildSnapshot(
     { teams, fixtures, statsByFixture, weather, worldbank },
     new Date().toISOString(),
+    resolveSeason(process.env),
   );
 
   mkdirSync("public/data", { recursive: true });

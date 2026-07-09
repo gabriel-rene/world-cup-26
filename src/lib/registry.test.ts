@@ -6,7 +6,7 @@ describe("variable registry", () => {
   it("every variable declares a known scope and unique key", () => {
     const keys = new Set<string>();
     for (const v of VARIABLES) {
-      expect(["2026-team", "2026-match"]).toContain(v.scope);
+      expect(["team", "match"]).toContain(v.scope);
       expect(keys.has(`${v.scope}:${v.key}`)).toBe(false);
       keys.add(`${v.scope}:${v.key}`);
     }
@@ -19,9 +19,9 @@ describe("variable registry", () => {
       cards: 5, avgPossession: 55, matchesPlayed: 3,
       population: 1000000, gdp: 5e10, gdpPerCapita: 50000, landArea: 100000,
     };
-    const gpc = variablesForScope("2026-team").find((v) => v.key === "gdpPerCapita")!;
+    const gpc = variablesForScope("team").find((v) => v.key === "gdpPerCapita")!;
     expect(gpc.accessor(team)).toBe(50000);
-    const goals = variablesForScope("2026-team").find((v) => v.key === "goalsFor")!;
+    const goals = variablesForScope("team").find((v) => v.key === "goalsFor")!;
     expect(goals.accessor(team)).toBe(7);
   });
 
@@ -31,14 +31,14 @@ describe("variable registry", () => {
       venue: "Stadium", kickoffUtc: "2026-06-12T18:00:00Z", goals: 2,
       possession: 60, shots: 12, temperatureC: null, humidity: 40, windKph: 9,
     };
-    const temp = variablesForScope("2026-match").find((v) => v.key === "temperatureC")!;
+    const temp = variablesForScope("match").find((v) => v.key === "temperatureC")!;
     expect(temp.accessor(m)).toBeNull();
-    const poss = variablesForScope("2026-match").find((v) => v.key === "possession")!;
+    const poss = variablesForScope("match").find((v) => v.key === "possession")!;
     expect(poss.accessor(m)).toBe(60);
   });
 
   it("variablesForScope only returns that scope", () => {
-    expect(variablesForScope("2026-match").every((v) => v.scope === "2026-match")).toBe(true);
-    expect(variablesForScope("2026-team").length).toBeGreaterThan(0);
+    expect(variablesForScope("match").every((v) => v.scope === "match")).toBe(true);
+    expect(variablesForScope("team").length).toBeGreaterThan(0);
   });
 });

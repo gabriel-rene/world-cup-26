@@ -20,24 +20,24 @@ const team = (fn: (r: TeamRow) => number | null) => (r: TeamRow | MatchTeamRow) 
 const match = (fn: (r: MatchTeamRow) => number | null) => (r: TeamRow | MatchTeamRow) => fn(r as MatchTeamRow);
 
 export const VARIABLES: VariableDef[] = [
-  // --- 2026 team ---
-  { key: "goalsFor", label: "Goals scored", scope: "2026-team", unit: "goals", format: int, accessor: team((r) => r.goalsFor) },
-  { key: "goalsAgainst", label: "Goals conceded", scope: "2026-team", unit: "goals", format: int, accessor: team((r) => r.goalsAgainst) },
-  { key: "shots", label: "Total shots", scope: "2026-team", unit: "shots", format: int, accessor: team((r) => r.shots) },
-  { key: "passAccuracy", label: "Pass accuracy", scope: "2026-team", unit: "%", format: pct, accessor: team((r) => r.passAccuracy) },
-  { key: "cards", label: "Cards", scope: "2026-team", unit: "cards", format: int, accessor: team((r) => r.cards) },
-  { key: "avgPossession", label: "Avg possession", scope: "2026-team", unit: "%", format: pct, accessor: team((r) => r.avgPossession) },
-  { key: "population", label: "Population", scope: "2026-team", unit: "people", format: int, accessor: team((r) => r.population) },
-  { key: "gdp", label: "GDP", scope: "2026-team", unit: "USD", format: usd, accessor: team((r) => r.gdp) },
-  { key: "gdpPerCapita", label: "GDP per capita", scope: "2026-team", unit: "USD", format: usd, accessor: team((r) => r.gdpPerCapita) },
-  { key: "landArea", label: "Land area", scope: "2026-team", unit: "km²", format: int, accessor: team((r) => r.landArea) },
-  // --- 2026 match ---
-  { key: "possession", label: "Ball possession", scope: "2026-match", unit: "%", format: pct, accessor: match((r) => r.possession) },
-  { key: "shots", label: "Shots", scope: "2026-match", unit: "shots", format: int, accessor: match((r) => r.shots) },
-  { key: "goals", label: "Goals", scope: "2026-match", unit: "goals", format: int, accessor: match((r) => r.goals) },
-  { key: "temperatureC", label: "Temperature", scope: "2026-match", unit: "°C", format: deg, accessor: match((r) => r.temperatureC) },
-  { key: "humidity", label: "Humidity", scope: "2026-match", unit: "%", format: pct, accessor: match((r) => r.humidity) },
-  { key: "windKph", label: "Wind speed", scope: "2026-match", unit: "km/h", format: int, accessor: match((r) => r.windKph) },
+  // --- team scope ---
+  { key: "goalsFor", label: "Goals scored", scope: "team", unit: "goals", format: int, accessor: team((r) => r.goalsFor) },
+  { key: "goalsAgainst", label: "Goals conceded", scope: "team", unit: "goals", format: int, accessor: team((r) => r.goalsAgainst) },
+  { key: "shots", label: "Total shots", scope: "team", unit: "shots", format: int, accessor: team((r) => r.shots) },
+  { key: "passAccuracy", label: "Pass accuracy", scope: "team", unit: "%", format: pct, accessor: team((r) => r.passAccuracy) },
+  { key: "cards", label: "Cards", scope: "team", unit: "cards", format: int, accessor: team((r) => r.cards) },
+  { key: "avgPossession", label: "Avg possession", scope: "team", unit: "%", format: pct, accessor: team((r) => r.avgPossession) },
+  { key: "population", label: "Population", scope: "team", unit: "people", format: int, accessor: team((r) => r.population) },
+  { key: "gdp", label: "GDP", scope: "team", unit: "USD", format: usd, accessor: team((r) => r.gdp) },
+  { key: "gdpPerCapita", label: "GDP per capita", scope: "team", unit: "USD", format: usd, accessor: team((r) => r.gdpPerCapita) },
+  { key: "landArea", label: "Land area", scope: "team", unit: "km²", format: int, accessor: team((r) => r.landArea) },
+  // --- match scope ---
+  { key: "possession", label: "Ball possession", scope: "match", unit: "%", format: pct, accessor: match((r) => r.possession) },
+  { key: "shots", label: "Shots", scope: "match", unit: "shots", format: int, accessor: match((r) => r.shots) },
+  { key: "goals", label: "Goals", scope: "match", unit: "goals", format: int, accessor: match((r) => r.goals) },
+  { key: "temperatureC", label: "Temperature", scope: "match", unit: "°C", format: deg, accessor: match((r) => r.temperatureC) },
+  { key: "humidity", label: "Humidity", scope: "match", unit: "%", format: pct, accessor: match((r) => r.humidity) },
+  { key: "windKph", label: "Wind speed", scope: "match", unit: "km/h", format: int, accessor: match((r) => r.windKph) },
 ];
 
 export function variablesForScope(scope: Scope): VariableDef[] {

@@ -11,7 +11,7 @@ describe("curated insights", () => {
     }
   });
   it("throws on an unknown variable key", () => {
-    expect(() => resolveInsight({ title: "x", scope: "2026-team", xKey: "nope", yKey: "goalsFor" }))
+    expect(() => resolveInsight({ title: "x", scope: "team", xKey: "nope", yKey: "goalsFor" }))
       .toThrow();
   });
 });

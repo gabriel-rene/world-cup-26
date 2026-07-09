@@ -1,5 +1,45 @@
 import { describe, it, expect } from "vitest";
-import { parseTeams, parseFixtures, parsePossession } from "./football";
+import { parseTeams, parseFixtures, parseStats, apiGet, resolveSeason } from "./football";
+
+function fakeFetch(payload: unknown): typeof fetch {
+  return (async () => ({ ok: true, json: async () => payload })) as unknown as typeof fetch;
+}
+
+describe("apiGet", () => {
+  it("throws when the body carries an API error (200 + errors.plan)", async () => {
+    const payload = {
+      errors: { plan: "Free plans do not have access to this season, try from 2022 to 2024." },
+      response: [],
+    };
+    await expect(apiGet("/teams?league=1&season=2026", "k", fakeFetch(payload)))
+      .rejects.toThrow(/Free plans do not have access/);
+  });
+
+  it("throws when the body carries a rate-limit error (200 + errors.requests)", async () => {
+    const payload = {
+      errors: { requests: "You have reached the request limit for the day." },
+      response: [],
+    };
+    await expect(apiGet("/fixtures?league=1&season=2022", "k", fakeFetch(payload)))
+      .rejects.toThrow(/request limit/);
+  });
+
+  it("returns the payload when errors is an empty array or object", async () => {
+    const ok = { errors: [], response: [{ team: { id: 1 } }] };
+    await expect(apiGet("/teams", "k", fakeFetch(ok))).resolves.toEqual(ok);
+    const okObj = { errors: {}, response: [] };
+    await expect(apiGet("/teams", "k", fakeFetch(okObj))).resolves.toEqual(okObj);
+  });
+});
+
+describe("resolveSeason", () => {
+  it("defaults to 2022 (the latest World Cup the free tier can access)", () => {
+    expect(resolveSeason({})).toBe(2022);
+  });
+  it("honors a WC_SEASON override", () => {
+    expect(resolveSeason({ WC_SEASON: "2026" })).toBe(2026);
+  });
+});
 
 describe("parseTeams", () => {
   it("extracts id/name/country", () => {
@@ -35,24 +75,35 @@ describe("parseFixtures", () => {
   });
 });
 
-describe("parsePossession", () => {
+describe("parseStats", () => {
   const statsJson = {
     response: [
       { team: { id: 1 }, statistics: [
         { type: "Ball Possession", value: "55%" },
         { type: "Total Shots", value: 12 },
+        { type: "Passes %", value: "88%" },
+        { type: "Yellow Cards", value: 2 },
+        { type: "Red Cards", value: 1 },
       ] },
       { team: { id: 2 }, statistics: [
         { type: "Ball Possession", value: "45%" },
         { type: "Total Shots", value: null },
+        { type: "Passes %", value: null },
+        { type: "Yellow Cards", value: null },
       ] },
     ],
   };
-  it("reads possession as a number and shots", () => {
-    expect(parsePossession(statsJson, 1)).toEqual({ possession: 55, shots: 12 });
+  it("reads possession, shots, pass accuracy, and total cards", () => {
+    expect(parseStats(statsJson, 1)).toEqual({
+      possession: 55, shots: 12, passAccuracy: 88, cards: 3,
+    });
   });
-  it("returns nulls for missing values", () => {
-    expect(parsePossession(statsJson, 2)).toEqual({ possession: 45, shots: null });
-    expect(parsePossession(statsJson, 999)).toEqual({ possession: null, shots: null });
+  it("returns nulls for missing values; cards is null when both card types absent", () => {
+    expect(parseStats(statsJson, 2)).toEqual({
+      possession: 45, shots: null, passAccuracy: null, cards: null,
+    });
+    expect(parseStats(statsJson, 999)).toEqual({
+      possession: null, shots: null, passAccuracy: null, cards: null,
+    });
   });
 });

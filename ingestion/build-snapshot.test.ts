@@ -54,10 +54,57 @@ describe("buildMatches", () => {
 
 describe("buildSnapshot", () => {
   it("assembles teams, matches, and meta with timestamp", () => {
-    const snap = buildSnapshot(inputs, "2026-06-25T00:00:00Z");
+    const snap = buildSnapshot(inputs, "2026-06-25T00:00:00Z", 2022);
     expect(snap.teams).toHaveLength(2);
     expect(snap.matches).toHaveLength(2);
     expect(snap.meta.generatedAt).toBe("2026-06-25T00:00:00Z");
     expect(snap.meta.sources.length).toBeGreaterThan(0);
+  });
+
+  it("labels the snapshot with the ingested tournament", () => {
+    expect(buildSnapshot(inputs, "2026-06-25T00:00:00Z", 2022).meta.tournament)
+      .toBe("FIFA World Cup 2022");
+    expect(buildSnapshot(inputs, "2026-06-25T00:00:00Z", 2026).meta.tournament)
+      .toBe("FIFA World Cup 2026");
+  });
+});
+
+describe("buildTeams aggregates pass accuracy and cards", () => {
+  const inputs: RawInputs = {
+    teams: [{ teamId: 1, name: "Brazil", country: "Brazil" }],
+    fixtures: [
+      { fixtureId: 100, kickoffUtc: "2026-06-12T18:00:00+00:00", venue: "MetLife Stadium",
+        homeId: 1, awayId: 2, homeGoals: 2, awayGoals: 1 },
+    ],
+    statsByFixture: {
+      100: { response: [
+        { team: { id: 1 }, statistics: [
+          { type: "Ball Possession", value: "60%" },
+          { type: "Total Shots", value: 10 },
+          { type: "Passes %", value: "90%" },
+          { type: "Yellow Cards", value: 1 },
+          { type: "Red Cards", value: 0 },
+        ] },
+      ] },
+    },
+    weather: {},
+    worldbank: {},
+  };
+
+  it("fills passAccuracy and cards from stats instead of 0", () => {
+    const [brazil] = buildTeams(inputs);
+    expect(brazil.passAccuracy).toBe(90);
+    expect(brazil.cards).toBe(1);
+    expect(brazil.shots).toBe(10);
+  });
+
+  it("reports null (not 0) for passAccuracy and cards when no fixture has that stat", () => {
+    const noStatsInputs: RawInputs = {
+      ...inputs,
+      statsByFixture: { 100: { response: [{ team: { id: 1 }, statistics: [] }] } },
+    };
+    const [brazil] = buildTeams(noStatsInputs);
+    expect(brazil.passAccuracy).toBeNull();
+    expect(brazil.cards).toBeNull();
   });
 });

@@ -1,4 +1,4 @@
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from "node:fs";
 import { COUNTRY_ISO3 } from "./countries";
 
 export interface CountryStats {
@@ -42,16 +42,39 @@ export async function fetchCountryStats(
   return out;
 }
 
+// Fresh non-null values win; otherwise keep the cached value so a World Bank
+// API outage can never erase known-good data.
+export function mergeCountryStats(
+  old: CountryStats | undefined,
+  fresh: CountryStats,
+): CountryStats {
+  if (!old) return fresh;
+  return {
+    iso3: fresh.iso3,
+    population: fresh.population ?? old.population,
+    gdp: fresh.gdp ?? old.gdp,
+    gdpPerCapita: fresh.gdpPerCapita ?? old.gdpPerCapita,
+    landArea: fresh.landArea ?? old.landArea,
+  };
+}
+
 async function main() {
   const iso3s = Array.from(new Set(Object.values(COUNTRY_ISO3)));
+  const cachePath = "data/raw/worldbank.json";
+  const cached: Record<string, CountryStats> = existsSync(cachePath)
+    ? JSON.parse(readFileSync(cachePath, "utf8"))
+    : {};
   const result: Record<string, CountryStats> = {};
+  let missing = 0;
   for (const iso3 of iso3s) {
-    result[iso3] = await fetchCountryStats(iso3);
-    console.log(`fetched ${iso3}`);
+    result[iso3] = mergeCountryStats(cached[iso3], await fetchCountryStats(iso3));
+    const m = Object.values(result[iso3]).filter((v) => v === null).length;
+    missing += m;
+    console.log(`fetched ${iso3}${m > 0 ? ` (${m} indicators missing)` : ""}`);
   }
   mkdirSync("data/raw", { recursive: true });
-  writeFileSync("data/raw/worldbank.json", JSON.stringify(result, null, 2));
-  console.log(`wrote data/raw/worldbank.json (${iso3s.length} countries)`);
+  writeFileSync(cachePath, JSON.stringify(result, null, 2));
+  console.log(`wrote ${cachePath} (${iso3s.length} countries, ${missing} null indicators)`);
 }
 
 if (process.argv[1] && process.argv[1].endsWith("worldbank.ts")) {
