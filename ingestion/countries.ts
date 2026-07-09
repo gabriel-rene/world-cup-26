@@ -7,7 +7,10 @@ export const COUNTRY_ISO3: Record<string, string> = {
   Ecuador: "ECU", Chile: "CHL", Peru: "PER", Paraguay: "PRY",
   Venezuela: "VEN", Bolivia: "BOL",
   // UEFA
-  France: "FRA", England: "GBR", Wales: "GBR", Scotland: "GBR",
+  // Wales and Scotland are intentionally unmapped: World Bank only
+  // publishes UK-aggregate indicators, and attributing them would show
+  // every one of their country stats as England's.
+  France: "FRA", England: "GBR",
   Spain: "ESP", Germany: "DEU", Portugal: "PRT", Netherlands: "NLD",
   Italy: "ITA", Belgium: "BEL", Croatia: "HRV", Switzerland: "CHE",
   Denmark: "DNK", Poland: "POL", Serbia: "SRB", Austria: "AUT",

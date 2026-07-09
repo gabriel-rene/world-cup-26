@@ -26,6 +26,14 @@ describe("reference tables", () => {
     expect(toIso3("Costa-Rica")).toBe("CRI");
   });
 
+  it("does not conflate UK constituent nations with GBR-level World Bank stats", () => {
+    // World Bank only publishes UK-aggregate indicators. Attributing them to
+    // Wales/Scotland would show every one of their stats as England's.
+    expect(toIso3("England")).toBe("GBR");
+    expect(toIso3("Wales")).toBeNull();
+    expect(toIso3("Scotland")).toBeNull();
+  });
+
   it("covers 24 distinct host stadiums (16 for 2026 + 8 for Qatar 2022) with finite coordinates", () => {
     const distinct = new Set(Object.values(VENUES).map((v) => v.name));
     expect(distinct.size).toBe(24);
