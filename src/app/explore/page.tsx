@@ -12,13 +12,13 @@ import { parseExploreParams, serializeExploreParams, type ExploreState } from "@
 function Explorer() {
   const searchParams = useSearchParams();
   const [state, setState] = useState<ExploreState>(() => parseExploreParams(searchParams));
-  const [copied, setCopied] = useState(false);
+  const [linkStatus, setLinkStatus] = useState<"idle" | "copied" | "error">("idle");
 
   // Keep the URL shareable without adding history entries on every tweak.
   useEffect(() => {
     const qs = serializeExploreParams(state);
     window.history.replaceState(null, "", `?${qs}`);
-    setCopied(false);
+    setLinkStatus("idle");
   }, [state]);
 
   const vars = variablesForScope(state.scope);
@@ -32,9 +32,19 @@ function Explorer() {
   };
 
   const copyLink = async () => {
-    await navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setLinkStatus("copied");
+    } catch {
+      setLinkStatus("error");
+    }
   };
+
+  const linkLabel = linkStatus === "copied"
+    ? "Link copied"
+    : linkStatus === "error"
+      ? "Couldn't copy — copy the URL from your address bar"
+      : "Copy link to this correlation";
 
   return (
     <>
@@ -50,9 +60,9 @@ function Explorer() {
         onY={(k) => setState((s) => ({ ...s, yKey: k }))}
       />
       <CorrelationCard rows={rowsForScope(state.scope)} xVar={xVar} yVar={yVar} labelKey={labelKey} />
-      <p style={{ marginTop: 14 }}>
+      <p style={{ marginTop: 14 }} aria-live="polite">
         <button type="button" className="button button-quiet" onClick={copyLink}>
-          {copied ? "Link copied" : "Copy link to this correlation"}
+          {linkLabel}
         </button>
       </p>
     </>

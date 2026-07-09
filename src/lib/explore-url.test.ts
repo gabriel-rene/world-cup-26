@@ -24,6 +24,21 @@ describe("parseExploreParams", () => {
     const p = new URLSearchParams("scope=stadium&x=goals&y=shots");
     expect(parseExploreParams(p)).toEqual(EXPLORE_DEFAULTS);
   });
+
+  it("never collapses x and y onto the same variable when only one axis is given", () => {
+    // Only y is specified; a naive fallback would pick the same variable for x.
+    const p = new URLSearchParams("scope=match&y=possession");
+    const out = parseExploreParams(p);
+    expect(out.yKey).toBe("possession");
+    expect(out.xKey).not.toBe(out.yKey);
+  });
+
+  it("never collapses x and y even when the explicit value matches the default scope's other axis", () => {
+    const p = new URLSearchParams("scope=team&y=gdpPerCapita");
+    const out = parseExploreParams(p);
+    expect(out.yKey).toBe("gdpPerCapita");
+    expect(out.xKey).not.toBe(out.yKey);
+  });
 });
 
 describe("serializeExploreParams", () => {
