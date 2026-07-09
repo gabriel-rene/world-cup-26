@@ -97,4 +97,14 @@ describe("buildTeams aggregates pass accuracy and cards", () => {
     expect(brazil.cards).toBe(1);
     expect(brazil.shots).toBe(10);
   });
+
+  it("reports null (not 0) for passAccuracy and cards when no fixture has that stat", () => {
+    const noStatsInputs: RawInputs = {
+      ...inputs,
+      statsByFixture: { 100: { response: [{ team: { id: 1 }, statistics: [] }] } },
+    };
+    const [brazil] = buildTeams(noStatsInputs);
+    expect(brazil.passAccuracy).toBeNull();
+    expect(brazil.cards).toBeNull();
+  });
 });

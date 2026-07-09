@@ -5,8 +5,8 @@ export interface TeamRow {
   goalsFor: number;
   goalsAgainst: number;
   shots: number;
-  passAccuracy: number;
-  cards: number;
+  passAccuracy: number | null;
+  cards: number | null;
   avgPossession: number;
   matchesPlayed: number;
   population: number | null;

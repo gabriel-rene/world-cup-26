@@ -19,7 +19,7 @@ export function buildTeams(inputs: RawInputs): TeamRow[] {
   return inputs.teams.map((t) => {
     const iso3 = toIso3(t.country);
     const wb = iso3 ? inputs.worldbank[iso3] : undefined;
-    let goalsFor = 0, goalsAgainst = 0, shots = 0, cards = 0, possSum = 0, matchesPlayed = 0;
+    let goalsFor = 0, goalsAgainst = 0, shots = 0, cardsSum = 0, cardsCount = 0, possSum = 0, matchesPlayed = 0;
     let passAccSum = 0, passAccCount = 0;
 
     for (const fx of inputs.fixtures) {
@@ -32,7 +32,7 @@ export function buildTeams(inputs: RawInputs): TeamRow[] {
       const stats = parseStats(inputs.statsByFixture[fx.fixtureId], t.teamId);
       if (stats.possession !== null) possSum += stats.possession;
       if (stats.shots !== null) shots += stats.shots;
-      if (stats.cards !== null) cards += stats.cards;
+      if (stats.cards !== null) { cardsSum += stats.cards; cardsCount += 1; }
       if (stats.passAccuracy !== null) { passAccSum += stats.passAccuracy; passAccCount += 1; }
     }
 
@@ -40,8 +40,9 @@ export function buildTeams(inputs: RawInputs): TeamRow[] {
       teamId: t.teamId,
       name: t.name,
       iso3: iso3 ?? "",
-      goalsFor, goalsAgainst, shots, cards,
-      passAccuracy: passAccCount > 0 ? passAccSum / passAccCount : 0,
+      goalsFor, goalsAgainst, shots,
+      cards: cardsCount > 0 ? cardsSum : null,
+      passAccuracy: passAccCount > 0 ? passAccSum / passAccCount : null,
       avgPossession: matchesPlayed > 0 ? possSum / matchesPlayed : 0,
       matchesPlayed,
       population: wb?.population ?? null,
