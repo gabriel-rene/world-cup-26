@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-06-25T00:00:00Z",
+  "sources": [
+    { "name": "API-Football", "url": "https://www.api-football.com/" },
+    { "name": "World Bank", "url": "https://data.worldbank.org/" },
+    { "name": "Open-Meteo", "url": "https://open-meteo.com/" }
+  ],
+  "caveats": [
+    "Fun correlations only — correlation does not imply causation.",
+    "Small sample (~48 teams / one tournament); r values are noisy.",
+    "Seed/sample data shown until ingestion is run."
+  ]
+}

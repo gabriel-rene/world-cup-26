@@ -1,0 +1,6 @@
+[
+  { "teamId": 1, "name": "Brazil", "iso3": "BRA", "goalsFor": 8, "goalsAgainst": 3, "shots": 55, "passAccuracy": 86, "cards": 6, "avgPossession": 58, "matchesPlayed": 3, "population": 215000000, "gdp": 2000000000000, "gdpPerCapita": 9500, "landArea": 8500000 },
+  { "teamId": 2, "name": "France", "iso3": "FRA", "goalsFor": 6, "goalsAgainst": 2, "shots": 48, "passAccuracy": 88, "cards": 4, "avgPossession": 56, "matchesPlayed": 3, "population": 68000000, "gdp": 2900000000000, "gdpPerCapita": 42000, "landArea": 550000 },
+  { "teamId": 3, "name": "Japan", "iso3": "JPN", "goalsFor": 4, "goalsAgainst": 4, "shots": 39, "passAccuracy": 84, "cards": 3, "avgPossession": 52, "matchesPlayed": 3, "population": 125000000, "gdp": 4200000000000, "gdpPerCapita": 33000, "landArea": 365000 },
+  { "teamId": 4, "name": "Morocco", "iso3": "MAR", "goalsFor": 5, "goalsAgainst": 3, "shots": 41, "passAccuracy": 81, "cards": 7, "avgPossession": 49, "matchesPlayed": 3, "population": 37000000, "gdp": 130000000000, "gdpPerCapita": 3500, "landArea": 446000 }
+]
