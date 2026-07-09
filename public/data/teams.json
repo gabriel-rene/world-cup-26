@@ -386,7 +386,7 @@
   {
     "teamId": 767,
     "name": "Wales",
-    "iso3": "GBR",
+    "iso3": "",
     "goalsFor": 1,
     "goalsAgainst": 6,
     "shots": 24,
@@ -394,10 +394,10 @@
     "passAccuracy": 77.33333333333333,
     "avgPossession": 46,
     "matchesPlayed": 3,
-    "population": 69226000,
-    "gdp": 3686033044482.13,
-    "gdpPerCapita": 53246.3676145108,
-    "landArea": 241930
+    "population": null,
+    "gdp": null,
+    "gdpPerCapita": null,
+    "landArea": null
   },
   {
     "teamId": 1118,
