@@ -8,14 +8,17 @@ import { SCOPE_LABEL_FIELD } from "@/lib/scopes";
 
 export default function Home() {
   return (
-    <main style={{ maxWidth: 960, margin: "0 auto", padding: 24 }}>
-      <h1>{getMeta().tournament} — Fun Correlations</h1>
-      <p>
-        Playful correlations between football data and public country data.{" "}
-        <Link href="/teams">Teams</Link> · <Link href="/explore">Build your own →</Link> ·{" "}
-        <Link href="/about">Methodology</Link>
-      </p>
-      <div style={{ display: "grid", gap: 16, gridTemplateColumns: "1fr 1fr" }}>
+    <main>
+      <div className="hero">
+        <p className="kicker">{getMeta().tournament}</p>
+        <h1>Fun Correlations</h1>
+        <p>
+          Playful correlations between football data and public country data.
+          Correlation ≠ causation — that&apos;s the fun part. Strong ones get a{" "}
+          yellow card. <Link href="/explore">Build your own →</Link>
+        </p>
+      </div>
+      <div className="card-grid">
         {INSIGHTS.map((insight) => {
           const { xVar, yVar } = resolveInsight(insight);
           const labelKey = SCOPE_LABEL_FIELD[insight.scope];

@@ -31,4 +31,10 @@ describe("CorrelationCard", () => {
     expect(screen.getByText("Goals vs GDP/capita")).toBeInTheDocument();
     expect(screen.getByText(/r =/)).toBeInTheDocument();
   });
+
+  it("renders a plain-language verdict chip for the correlation", () => {
+    // Two rows → n = 2 → the tiny-sample verdict.
+    render(<CorrelationCard rows={teams} xVar={xVar} yVar={yVar} labelKey="name" />);
+    expect(screen.getByText("tiny sample — anything correlates")).toBeInTheDocument();
+  });
 });

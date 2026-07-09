@@ -1,15 +1,19 @@
-import Link from "next/link";
 import { getMeta } from "@/lib/snapshot";
 
 export default function About() {
   const meta = getMeta();
   return (
-    <main style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
+    <main className="prose">
       <h1>Methodology</h1>
-      <p><Link href="/">← Home</Link></p>
       <p>
         This site shows <strong>fun</strong> correlations between {meta.tournament} football
         data and public country data. They are descriptive, not predictive.
+      </p>
+      <p>
+        Every correlation carries a plain-language verdict. Strong ones get a{" "}
+        <span className="verdict verdict-yellow">suspiciously strong</span> yellow
+        card, because on a sample this small, an impressive r is more likely a
+        coincidence than a discovery.
       </p>
       <h2>Caveats</h2>
       <ul>{meta.caveats.map((c) => <li key={c}>{c}</li>)}</ul>
@@ -19,7 +23,7 @@ export default function About() {
           <li key={s.name}><a href={s.url}>{s.name}</a></li>
         ))}
       </ul>
-      <p style={{ color: "#777", fontSize: 13 }}>Snapshot generated: {meta.generatedAt}</p>
+      <p className="fine">Snapshot generated: {meta.generatedAt}</p>
     </main>
   );
 }

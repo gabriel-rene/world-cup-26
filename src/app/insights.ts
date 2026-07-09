@@ -13,6 +13,10 @@ export const INSIGHTS: Insight[] = [
   { title: "Bigger countries, more goals?", scope: "team", xKey: "population", yKey: "goalsFor" },
   { title: "Does the heat kill possession?", scope: "match", xKey: "temperatureC", yKey: "possession" },
   { title: "More possession, more shots?", scope: "match", xKey: "possession", yKey: "shots" },
+  { title: "Bigger country, longer passes?", scope: "team", xKey: "landArea", yKey: "passAccuracy" },
+  { title: "Do richer nations play cleaner?", scope: "team", xKey: "gdpPerCapita", yKey: "cards" },
+  { title: "Goals gone with the wind?", scope: "match", xKey: "windKph", yKey: "goals" },
+  { title: "Sweaty palms, fewer shots?", scope: "match", xKey: "humidity", yKey: "shots" },
 ];
 
 export function resolveInsight(i: Insight) {
