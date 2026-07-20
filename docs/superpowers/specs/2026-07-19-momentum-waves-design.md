@@ -31,7 +31,7 @@ New module `ingestion/fotmob.ts`, following the existing ingestion pattern
   showcase match by a manual build-time script: `npm run ingest:waves`.
   No API key. Polite delay between requests and a descriptive User-Agent.
 - **Extracted:** per-minute momentum trace, goals (minute, scorer, side,
-  running score), team names/codes, final score, stage, kickoff.
+  running score), team names/codes, final score, stage, kickoff, venue.
 - **Normalized schema** (the app never sees FotMob's shape):
 
   ```ts
@@ -39,6 +39,7 @@ New module `ingestion/fotmob.ts`, following the existing ingestion pattern
     matchId: string,            // our slug, e.g. "arg-fra-final"
     stage: string,
     kickoff: string,            // ISO datetime
+    venue: string,
     home: { name: string, code: string, color: string },
     away: { name: string, code: string, color: string },
     score: [number, number],
