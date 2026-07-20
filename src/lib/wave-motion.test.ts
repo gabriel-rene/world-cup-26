@@ -37,6 +37,22 @@ describe("resampleMomentum", () => {
     }
   });
 
+  it("clamps genuine Catmull-Rom overshoot after a sharp step", () => {
+    // A hard -1 -> +1 step: the spline overshoots past +1 on the plateau
+    // just after the step (pre-clamp smoothed value ~1.04), so this test
+    // fails if the clamp in resampleMomentum is removed.
+    const step = [
+      { minute: 0, value: -1 }, { minute: 1, value: -1 }, { minute: 2, value: -1 },
+      { minute: 3, value: 1 }, { minute: 4, value: 1 }, { minute: 5, value: 1 },
+      { minute: 6, value: 1 },
+    ];
+    const c = resampleMomentum(step);
+    for (const v of c.values) {
+      expect(v).toBeGreaterThanOrEqual(-1);
+      expect(v).toBeLessThanOrEqual(1);
+    }
+  });
+
   it("throws on fewer than 2 points", () => {
     expect(() => resampleMomentum([{ minute: 0, value: 0 }])).toThrow();
   });
