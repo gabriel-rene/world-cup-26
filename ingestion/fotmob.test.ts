@@ -154,7 +154,10 @@ describe("WAVE_MATCHES config", () => {
     for (const m of WAVE_MATCHES) {
       expect(m.home.color).toMatch(/^#[0-9a-f]{6}$/i);
       expect(m.away.color).toMatch(/^#[0-9a-f]{6}$/i);
-      expect(m.pageUrl).toMatch(/^\/matches\//);
+      // Usually "/matches/{slug}/{hash}"; fotmob can reuse a slug/hash for a
+      // later fixture between the same teams, in which case we fall back to
+      // the stable "/match/{id}" URL (see cro-bra-qf in waves-config.ts).
+      expect(m.pageUrl).toMatch(/^\/match(es)?\//);
     }
   });
 });

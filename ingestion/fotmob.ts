@@ -1,5 +1,6 @@
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
 import type { WaveMatch, WaveGoal, MomentumPoint } from "../src/lib/waves-types";
-import { type WaveMatchConfig } from "./waves-config";
+import { type WaveMatchConfig, WAVE_MATCHES } from "./waves-config";
 
 // FotMob's /api/ endpoints require a signed x-mas header, but the public
 // match pages embed the full payload as __NEXT_DATA__ JSON. We parse that.
@@ -88,4 +89,48 @@ export function parseWaveMatch(nextData: unknown, cfg: WaveMatchConfig): WaveMat
     momentum,
     goals,
   };
+}
+
+const UA =
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36";
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+async function fetchPage(pageUrl: string, fetchFn: typeof fetch = fetch): Promise<string> {
+  const res = await fetchFn(`https://www.fotmob.com${pageUrl}`, {
+    headers: { "User-Agent": UA },
+  });
+  if (!res.ok) throw new Error(`FotMob ${pageUrl} -> ${res.status}`);
+  return res.text();
+}
+
+async function main() {
+  mkdirSync("data/raw", { recursive: true });
+  mkdirSync("public/data/waves", { recursive: true });
+  for (const cfg of WAVE_MATCHES) {
+    const rawPath = `data/raw/fotmob-${cfg.fotmobId}.html`;
+    let html: string;
+    if (existsSync(rawPath)) {
+      console.log(`using cached ${rawPath}`);
+      html = readFileSync(rawPath, "utf8");
+    } else {
+      console.log(`fetching ${cfg.pageUrl}`);
+      html = await fetchPage(cfg.pageUrl);
+      writeFileSync(rawPath, html);
+      await sleep(3000); // be polite: one page every 3 s
+    }
+    const match = parseWaveMatch(extractNextData(html), cfg);
+    const outPath = `public/data/waves/${cfg.slug}.json`;
+    writeFileSync(outPath, JSON.stringify(match, null, 2));
+    console.log(
+      `wrote ${outPath} (${match.momentum.length} momentum points, ${match.goals.length} goals)`,
+    );
+  }
+}
+
+if (process.argv[1] && process.argv[1].endsWith("fotmob.ts")) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
 }

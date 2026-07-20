@@ -11,6 +11,7 @@
     "ingest:worldbank": "tsx ingestion/worldbank.ts",
     "ingest:football": "tsx ingestion/football.ts",
     "ingest:weather": "tsx ingestion/weather.ts",
+    "ingest:waves": "tsx ingestion/fotmob.ts",
     "build:snapshot": "tsx ingestion/build-snapshot.ts"
   },
   "dependencies": {

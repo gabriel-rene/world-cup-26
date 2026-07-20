@@ -21,7 +21,11 @@ export const WAVE_MATCHES: WaveMatchConfig[] = [
   {
     slug: "cro-bra-qf",
     fotmobId: "3370565",
-    pageUrl: "/matches/brazil-vs-croatia/2swyz6",
+    // NOTE: the original "/matches/brazil-vs-croatia/2swyz6" slug now
+    // resolves to an unrelated 2026 friendly (fotmob reused the slug).
+    // The direct /match/{id} URL still resolves to the real Dec 9, 2022
+    // WC 2022 quarter-final; verified via curl before switching.
+    pageUrl: "/match/3370565",
     stage: "Quarter-final",
     home: { code: "HRV", color: "#e8ecf4" },
     away: { code: "BRA", color: "#ffd23f" },
