@@ -12,12 +12,13 @@ liquid; the front where the colors meet is the momentum tide line. Goals
 punctuate as ripples and a color wash. Inspired by wc26.bogachev.fr, but
 deliberately narrower: momentum + goals only.
 
-V1 covers **4 showcase matches from FIFA World Cup 2022**:
+V1 covers **4 showcase matches from FIFA World Cup 2022** (FotMob ids
+verified 2026-07-20; home team listed first, as FotMob has them):
 
-1. Argentina–France (final)
-2. Argentina–Netherlands (quarter-final)
-3. Brazil–Croatia (quarter-final)
-4. Spain–Japan (group stage)
+1. Argentina–France, final — `3370572`
+2. Netherlands–Argentina, quarter-final — `3370566`
+3. Croatia–Brazil, quarter-final — `3370565`
+4. Japan–Spain, group E — `3854589`
 
 Match IDs are parameterized — adding matches later is just adding IDs.
 
@@ -26,10 +27,15 @@ Match IDs are parameterized — adding matches later is just adding IDs.
 New module `ingestion/fotmob.ts`, following the existing ingestion pattern
 (fetch → validate → normalize → committed static JSON, fixture-based tests).
 
-- **Source:** FotMob's unofficial match-details endpoint
-  (`https://www.fotmob.com/api/matchDetails?matchId=<id>`), fetched once per
-  showcase match by a manual build-time script: `npm run ingest:waves`.
-  No API key. Polite delay between requests and a descriptive User-Agent.
+- **Source:** FotMob match pages. FotMob's `/api/` endpoints now require a
+  signed `x-mas` header, but each match page embeds the full match payload
+  (momentum included) as `__NEXT_DATA__` JSON. The ingest fetches the public
+  match page HTML (e.g. `https://www.fotmob.com/matches/argentina-vs-france/1hox8a`)
+  and parses that embed — once per showcase match, via a manual build-time
+  script: `npm run ingest:waves`. No API key. Polite delay between requests
+  and a browser User-Agent. Verified working 2026-07-20; momentum arrives as
+  `content.momentum.main.data` (`{minute, value}`, value in [-100, 100],
+  positive = home).
 - **Extracted:** per-minute momentum trace, goals (minute, scorer, side,
   running score), team names/codes, final score, stage, kickoff, venue.
 - **Normalized schema** (the app never sees FotMob's shape):
@@ -37,12 +43,14 @@ New module `ingestion/fotmob.ts`, following the existing ingestion pattern
   ```ts
   {
     matchId: string,            // our slug, e.g. "arg-fra-final"
+    fotmobId: string,           // upstream id, for provenance
     stage: string,
     kickoff: string,            // ISO datetime
     venue: string,
     home: { name: string, code: string, color: string },
     away: { name: string, code: string, color: string },
-    score: [number, number],
+    score: [number, number],    // after extra time if played
+    penalties: [number, number] | null,  // shootout result (3 of the 4 matches)
     momentum: Array<{ minute: number, value: number }>, // value ∈ [-1, 1], + = home
     goals: Array<{
       minute: number,
@@ -53,9 +61,11 @@ New module `ingestion/fotmob.ts`, following the existing ingestion pattern
   }
   ```
 
-- **Storage:** one small JSON file per match under `data/waves/`, committed.
-  Read statically by the app — no backend, no runtime keys, consistent with
-  the existing architecture.
+- **Storage:** one small JSON file per match under `public/data/waves/`,
+  committed — the same directory the existing snapshot loader imports from
+  statically. Raw fetched HTML is cached under `data/raw/` (gitignored,
+  regenerable), matching the existing ingestion pattern. No backend, no
+  runtime keys.
 - **Team colors:** our own curated palette (defined in the ingestion config,
   one primary color per team), chosen for on-pitch contrast. FotMob's colors
   are inconsistent and are not used.
