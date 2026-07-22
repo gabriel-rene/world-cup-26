@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/", label: "Feed" },
   { href: "/explore", label: "Explorer" },
   { href: "/teams", label: "Teams" },
+  { href: "/waves", label: "Waves" },
   { href: "/about", label: "Methodology" },
 ] as const;
 

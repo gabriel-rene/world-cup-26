@@ -23,6 +23,11 @@ export default function About() {
           <li key={s.name}><a href={s.url}>{s.name}</a></li>
         ))}
       </ul>
+      <p>
+        The <a href="/waves">Momentum Waves</a> visualizations additionally use per-minute match
+        momentum from <a href="https://www.fotmob.com">FotMob</a>, smoothed for readability. The
+        waves are an impression of each match, not a literal replay.
+      </p>
       <p className="fine">Snapshot generated: {meta.generatedAt}</p>
     </main>
   );

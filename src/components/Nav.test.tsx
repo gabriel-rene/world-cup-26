@@ -9,7 +9,7 @@ describe("Nav", () => {
     render(<Nav />);
     expect(screen.getByText("Fun Correlations")).toBeInTheDocument();
     expect(screen.getByText(/FIFA World Cup/)).toBeInTheDocument();
-    for (const name of ["Feed", "Explorer", "Teams", "Methodology"]) {
+    for (const name of ["Feed", "Explorer", "Teams", "Waves", "Methodology"]) {
       expect(screen.getByRole("link", { name })).toBeInTheDocument();
     }
   });
