@@ -291,3 +291,111 @@ main {
   .corr-card { transition: border-color 160ms ease; }
   .corr-card:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
 }
+
+/* --- momentum waves --------------------------------------------------- */
+
+.waves-portrait { max-width: 980px; margin: 0 auto; padding: 1rem; }
+.waves-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+.waves-score {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.waves-team { font-size: 1.05rem; font-weight: 600; }
+.waves-stage-box {
+  position: relative;
+  aspect-ratio: 105 / 68;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #06131f;
+}
+.waves-pitch-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.waves-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+.waves-controls button {
+  display: inline-grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.waves-controls button:hover { border-color: var(--accent); color: var(--accent); }
+.waves-controls button:active { transform: scale(0.96); }
+.waves-scrub { position: relative; flex: 1; min-width: 0; }
+.waves-scrub input[type="range"] {
+  display: block;
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.waves-goal-ticks { position: absolute; inset: -4px 0 auto; height: 4px; }
+.waves-goal-tick {
+  position: absolute;
+  width: 2px;
+  height: 4px;
+  background: var(--ink);
+  opacity: 0.7;
+  transform: translateX(-1px);
+}
+.waves-minute {
+  min-width: 3ch;
+  text-align: right;
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+}
+.waves-meta { margin-top: 0.75rem; }
+.waves-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.waves-card {
+  display: block;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--surface);
+  text-decoration: none;
+}
+.waves-card:hover { border-color: var(--accent); }
+.waves-card-score { font-size: 1.3rem; font-weight: 700; }
+.waves-card-stage { color: var(--muted); font-size: 0.9rem; }
+
+@media (max-width: 520px) {
+  .waves-portrait { padding-inline: 0; }
+  .waves-header { align-items: flex-start; }
+  .waves-team { font-size: 0.95rem; }
+  .waves-score { font-size: 1.35rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .waves-controls button { transition: border-color 160ms ease, color 160ms ease, transform 160ms ease; }
+  .waves-card { transition: border-color 160ms ease; }
+}
