@@ -1,84 +1,142 @@
-# World Cup — Fun Correlations
+# World Cup Fun Correlations
 
-Visualize FIFA World Cup data alongside public country data (population,
-GDP, GDP per capita, weather) and explore playful correlations — *which nation
-scored more goals per GDP per capita?*, *how does temperature affect ball
-possession?* — as scatter plots with real correlation coefficients and a fun
-headline.
+An interactive data story that puts FIFA World Cup performance beside the
+economic, geographic, and weather data of the nations competing.
 
-The committed snapshot covers **FIFA World Cup 2022 (Qatar)** — the most
-recent complete tournament the free data tier can reach. The pipeline is
-season-parameterized (`WC_SEASON`) and switches to 2026 as soon as a data
-plan that covers it is available.
+[![Next.js](https://img.shields.io/badge/Next.js-15-111111?logo=nextdotjs)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tests](https://img.shields.io/badge/tests-Vitest-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
 
-> Correlation ≠ causation. These are descriptive, for-fun correlations over a
-> small sample. See the in-app methodology note.
+![World Cup Fun Correlations dashboard](docs/assets/world-cup-correlations-preview.jpg)
+
+## The idea
+
+Do richer nations score more? Does heat affect possession? Are more populous
+countries better at finding the net?
+
+This project turns those questions into explorable scatter plots, calculates
+real Pearson correlation coefficients, and translates the result into a
+plain-language verdict. A second visualization, **Momentum Waves**, renders
+iconic matches as two team-colored tides whose moving front follows the shape
+of the game and whose goals land as ripples.
+
+> Correlation is not causation. The analysis is intentionally playful,
+> descriptive, and based on a small tournament sample.
+
+## Highlights
+
+- **Curated correlation feed** with approachable headlines and statistical
+  context
+- **Build-your-own explorer** for pairing football and country variables
+- **Sortable team profiles** backed by a committed, reproducible snapshot
+- **WebGL2 match visualizations** with playback controls and an accessible
+  static fallback
+- **Shareable URLs** that preserve explorer selections
+- **Static-first architecture** with no database, backend, or browser-exposed
+  API keys
+- **Automated test suite** covering the data pipeline, statistics, routing,
+  components, and momentum rendering math
 
 ## How it works
 
-- An **ingestion** step pulls data from free sources (API-Football, the World
-  Bank API, and Open-Meteo) and builds a static JSON snapshot.
-- The **Next.js app** reads only that committed snapshot — no backend, no
-  database, no API keys in the browser.
-- A **hybrid** UX: a curated feed of highlight correlations plus a
-  build-your-own explorer.
+```mermaid
+flowchart LR
+    A["Football data"] --> E["TypeScript ingestion"]
+    B["World Bank"] --> E
+    C["Open-Meteo"] --> E
+    D["FotMob momentum"] --> E
+    E --> S["Committed JSON snapshot"]
+    S --> N["Next.js application"]
+    N --> V["Correlations · Teams · Momentum Waves"]
+```
 
-## Status
+The browser reads only versioned JSON in `public/data`. External APIs are
+called by local ingestion scripts, keeping credentials and rate limits out of
+the application runtime.
 
-Live with real WC 2022 data. Design specs:
-[`docs/superpowers/specs/`](docs/superpowers/specs/)
+The committed snapshot covers **FIFA World Cup 2022 in Qatar**, the latest
+complete tournament available to the original free data plan. The pipeline is
+season-parameterized through `WC_SEASON`, so it can move to 2026 when a
+compatible data source or plan is available.
+
+## Tech stack
+
+| Layer | Technology |
+| --- | --- |
+| Application | Next.js 15, React 19, TypeScript |
+| Charts | Recharts |
+| Match art | WebGL2, GLSL shaders, Canvas fallback |
+| Data pipeline | TypeScript, `tsx`, static JSON snapshots |
+| Testing | Vitest, Testing Library, jsdom |
+| Data | API-Football, World Bank, Open-Meteo, FotMob |
+
+## Run locally
+
+```bash
+git clone https://github.com/gabriel-rene/world-cup-26.git
+cd world-cup-26
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+```bash
+npm test       # run the test suite
+npm run build  # create a production build
+```
+
+The committed snapshot is enough to run the full application. No API key is
+required unless you want to rebuild the source data.
+
+## Rebuild the data
+
+Create a local `.env` file:
+
+```dotenv
+API_FOOTBALL_KEY=your_key_here
+```
+
+Then run the ingestion steps:
+
+```bash
+npm run ingest:football
+npm run ingest:worldbank
+npm run ingest:weather
+npm run build:snapshot
+```
+
+Momentum snapshots are configured separately in
+`ingestion/waves-config.ts` and generated with:
+
+```bash
+npm run ingest:waves
+```
+
+Raw responses are cached under the git-ignored `data/raw/` directory. The
+football ingestion process throttles requests and resumes from the cache after
+an interruption.
 
 ## Data sources
 
 | Source | Used for |
-|---|---|
-| [API-Football](https://www.api-football.com/) | World Cup teams, fixtures, per-match statistics |
-| [World Bank API](https://data.worldbank.org/) | population, GDP, GDP per capita, land area |
-| [Open-Meteo](https://open-meteo.com/) | per-match weather at venue + kickoff |
-| [Fjelstul World Cup Database](https://github.com/jfjelstul/worldcup) | historical tournaments (1930–2022), *v2* |
+| --- | --- |
+| [API-Football](https://www.api-football.com/) | Teams, fixtures, and per-match statistics |
+| [World Bank](https://data.worldbank.org/) | Population, GDP, GDP per capita, and land area |
+| [Open-Meteo](https://open-meteo.com/) | Venue weather at kickoff |
+| [FotMob](https://www.fotmob.com/) | Per-minute momentum for selected matches |
+| [Fjelstul World Cup Database](https://github.com/jfjelstul/worldcup) | Historical tournaments for future expansion |
 
-## Ingesting real data
+## Project structure
 
-The committed snapshot is built from real data. To rebuild it you supply your
-own free [API-Football](https://www.api-football.com/) key. The key is read
-**only** by the ingestion scripts (build time) and is never sent to the
-browser.
+```text
+src/app/          Routes and page composition
+src/components/   Charts, controls, tables, and WebGL views
+src/lib/          Correlation, snapshot, URL, and wave-domain logic
+ingestion/        Reproducible data collection and snapshot builders
+public/data/      Versioned application data
+```
 
-1. Create a `.env` file in the project root (it is git-ignored):
-
-   ```
-   API_FOOTBALL_KEY=your_key_here
-   ```
-
-2. Run the ingestion steps in order:
-
-   ```bash
-   npm run ingest:football    # teams, fixtures, per-fixture stats -> data/raw/
-   npm run ingest:worldbank   # population, GDP, land area -> data/raw/worldbank.json
-   npm run ingest:weather     # kickoff weather per fixture -> data/raw/weather.json
-   npm run build:snapshot     # combine raw caches -> public/data/{teams,matches,meta}.json
-   ```
-
-3. Restart the dev server (`npm run dev`) to see the new snapshot.
-
-**Which season?**
-
-- Ingestion defaults to `WC_SEASON=2022` (Qatar). The **free** API-Football
-  tier only serves seasons 2022–2024; requesting 2026 on a free plan returns
-  an in-body plan error (which the ingestion now fails loudly on, instead of
-  caching it).
-- On a paid plan, `WC_SEASON=2026 npm run ingest:football` switches the whole
-  pipeline — the snapshot's tournament label, page titles, and venue weather
-  follow automatically.
-
-**Notes**
-
-- The free tier allows ~10 requests/minute; `ingest:football` throttles
-  itself and caches each fixture's stats to `data/raw/stats-<id>.json`,
-  skipping files it has already fetched, so an interrupted run resumes where
-  it left off.
-- `data/raw/` is git-ignored (large and regenerable); only the built
-  `public/data/*.json` snapshot is committed.
-- Pass accuracy and cards come from the API-Football statistics payload. If
-  a stat is omitted for a fixture, that fixture simply contributes nothing to
-  the average/sum rather than breaking the build.
+Design decisions and implementation notes live in
+[`docs/superpowers`](docs/superpowers).
