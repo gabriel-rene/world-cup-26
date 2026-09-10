@@ -1,0 +1,658 @@
+{
+  "tournament": "FIFA World Cup 2026",
+  "coverage": "Group stage only",
+  "source": "OpenFootball",
+  "sourceUrl": "https://github.com/openfootball/worldcup/blob/master/2026--canada-usa-mexico/cup.txt",
+  "retrievedAt": "2026-09-10T20:44:21.987Z",
+  "sourceSha256": "508fffdd09d0f0d8daed38a8e2323120a8205cf4cfe8af5660b675cf49c413d3",
+  "matches": [
+    {
+      "group": "A",
+      "kickoffUtc": "2026-06-11T19:00:00.000Z",
+      "home": "Mexico",
+      "away": "South Africa",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "venue": "Mexico City"
+    },
+    {
+      "group": "A",
+      "kickoffUtc": "2026-06-12T02:00:00.000Z",
+      "home": "South Korea",
+      "away": "Czech Republic",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "venue": "Guadalajara (Zapopan)"
+    },
+    {
+      "group": "B",
+      "kickoffUtc": "2026-06-12T19:00:00.000Z",
+      "home": "Canada",
+      "away": "Bosnia & Herzegovina",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "Toronto"
+    },
+    {
+      "group": "D",
+      "kickoffUtc": "2026-06-13T01:00:00.000Z",
+      "home": "USA",
+      "away": "Paraguay",
+      "homeGoals": 4,
+      "awayGoals": 1,
+      "venue": "Los Angeles (Inglewood)"
+    },
+    {
+      "group": "B",
+      "kickoffUtc": "2026-06-13T19:00:00.000Z",
+      "home": "Qatar",
+      "away": "Switzerland",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "San Francisco Bay Area (Santa Clara)"
+    },
+    {
+      "group": "C",
+      "kickoffUtc": "2026-06-13T22:00:00.000Z",
+      "home": "Brazil",
+      "away": "Morocco",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "New York/New Jersey (East Rutherford)"
+    },
+    {
+      "group": "C",
+      "kickoffUtc": "2026-06-14T01:00:00.000Z",
+      "home": "Haiti",
+      "away": "Scotland",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "venue": "Boston (Foxborough)"
+    },
+    {
+      "group": "D",
+      "kickoffUtc": "2026-06-14T04:00:00.000Z",
+      "home": "Australia",
+      "away": "Turkey",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "venue": "Vancouver"
+    },
+    {
+      "group": "E",
+      "kickoffUtc": "2026-06-14T17:00:00.000Z",
+      "home": "Germany",
+      "away": "Curaçao",
+      "homeGoals": 7,
+      "awayGoals": 1,
+      "venue": "Houston"
+    },
+    {
+      "group": "F",
+      "kickoffUtc": "2026-06-14T20:00:00.000Z",
+      "home": "Netherlands",
+      "away": "Japan",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "venue": "Dallas (Arlington)"
+    },
+    {
+      "group": "E",
+      "kickoffUtc": "2026-06-14T23:00:00.000Z",
+      "home": "Ivory Coast",
+      "away": "Ecuador",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "venue": "Philadelphia"
+    },
+    {
+      "group": "F",
+      "kickoffUtc": "2026-06-15T02:00:00.000Z",
+      "home": "Sweden",
+      "away": "Tunisia",
+      "homeGoals": 5,
+      "awayGoals": 1,
+      "venue": "Monterrey (Guadalupe)"
+    },
+    {
+      "group": "H",
+      "kickoffUtc": "2026-06-15T16:00:00.000Z",
+      "home": "Spain",
+      "away": "Cape Verde",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "venue": "Atlanta"
+    },
+    {
+      "group": "G",
+      "kickoffUtc": "2026-06-15T19:00:00.000Z",
+      "home": "Belgium",
+      "away": "Egypt",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "Seattle"
+    },
+    {
+      "group": "H",
+      "kickoffUtc": "2026-06-15T22:00:00.000Z",
+      "home": "Saudi Arabia",
+      "away": "Uruguay",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "Miami (Miami Gardens)"
+    },
+    {
+      "group": "G",
+      "kickoffUtc": "2026-06-16T01:00:00.000Z",
+      "home": "Iran",
+      "away": "New Zealand",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "venue": "Los Angeles (Inglewood)"
+    },
+    {
+      "group": "I",
+      "kickoffUtc": "2026-06-16T19:00:00.000Z",
+      "home": "France",
+      "away": "Senegal",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "venue": "New York/New Jersey (East Rutherford)"
+    },
+    {
+      "group": "I",
+      "kickoffUtc": "2026-06-16T22:00:00.000Z",
+      "home": "Iraq",
+      "away": "Norway",
+      "homeGoals": 1,
+      "awayGoals": 4,
+      "venue": "Boston (Foxborough)"
+    },
+    {
+      "group": "J",
+      "kickoffUtc": "2026-06-17T01:00:00.000Z",
+      "home": "Argentina",
+      "away": "Algeria",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "venue": "Kansas City"
+    },
+    {
+      "group": "J",
+      "kickoffUtc": "2026-06-17T04:00:00.000Z",
+      "home": "Austria",
+      "away": "Jordan",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "venue": "San Francisco Bay Area (Santa Clara)"
+    },
+    {
+      "group": "K",
+      "kickoffUtc": "2026-06-17T17:00:00.000Z",
+      "home": "Portugal",
+      "away": "DR Congo",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "Houston"
+    },
+    {
+      "group": "L",
+      "kickoffUtc": "2026-06-17T20:00:00.000Z",
+      "home": "England",
+      "away": "Croatia",
+      "homeGoals": 4,
+      "awayGoals": 2,
+      "venue": "Dallas (Arlington)"
+    },
+    {
+      "group": "L",
+      "kickoffUtc": "2026-06-17T23:00:00.000Z",
+      "home": "Ghana",
+      "away": "Panama",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "venue": "Toronto"
+    },
+    {
+      "group": "K",
+      "kickoffUtc": "2026-06-18T02:00:00.000Z",
+      "home": "Uzbekistan",
+      "away": "Colombia",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "venue": "Mexico City"
+    },
+    {
+      "group": "A",
+      "kickoffUtc": "2026-06-18T16:00:00.000Z",
+      "home": "Czech Republic",
+      "away": "South Africa",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "Atlanta"
+    },
+    {
+      "group": "B",
+      "kickoffUtc": "2026-06-18T19:00:00.000Z",
+      "home": "Switzerland",
+      "away": "Bosnia & Herzegovina",
+      "homeGoals": 4,
+      "awayGoals": 1,
+      "venue": "Los Angeles (Inglewood)"
+    },
+    {
+      "group": "B",
+      "kickoffUtc": "2026-06-18T22:00:00.000Z",
+      "home": "Canada",
+      "away": "Qatar",
+      "homeGoals": 6,
+      "awayGoals": 0,
+      "venue": "Vancouver"
+    },
+    {
+      "group": "A",
+      "kickoffUtc": "2026-06-19T01:00:00.000Z",
+      "home": "Mexico",
+      "away": "South Korea",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "venue": "Guadalajara (Zapopan)"
+    },
+    {
+      "group": "D",
+      "kickoffUtc": "2026-06-19T19:00:00.000Z",
+      "home": "USA",
+      "away": "Australia",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "venue": "Seattle"
+    },
+    {
+      "group": "C",
+      "kickoffUtc": "2026-06-19T22:00:00.000Z",
+      "home": "Scotland",
+      "away": "Morocco",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "venue": "Boston (Foxborough)"
+    },
+    {
+      "group": "C",
+      "kickoffUtc": "2026-06-20T00:30:00.000Z",
+      "home": "Brazil",
+      "away": "Haiti",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "venue": "Philadelphia"
+    },
+    {
+      "group": "D",
+      "kickoffUtc": "2026-06-20T03:00:00.000Z",
+      "home": "Turkey",
+      "away": "Paraguay",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "venue": "San Francisco Bay Area (Santa Clara)"
+    },
+    {
+      "group": "F",
+      "kickoffUtc": "2026-06-20T17:00:00.000Z",
+      "home": "Netherlands",
+      "away": "Sweden",
+      "homeGoals": 5,
+      "awayGoals": 1,
+      "venue": "Houston"
+    },
+    {
+      "group": "E",
+      "kickoffUtc": "2026-06-20T20:00:00.000Z",
+      "home": "Germany",
+      "away": "Ivory Coast",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "venue": "Toronto"
+    },
+    {
+      "group": "E",
+      "kickoffUtc": "2026-06-21T00:00:00.000Z",
+      "home": "Ecuador",
+      "away": "Curaçao",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "venue": "Kansas City"
+    },
+    {
+      "group": "F",
+      "kickoffUtc": "2026-06-21T04:00:00.000Z",
+      "home": "Tunisia",
+      "away": "Japan",
+      "homeGoals": 0,
+      "awayGoals": 4,
+      "venue": "Monterrey (Guadalupe)"
+    },
+    {
+      "group": "H",
+      "kickoffUtc": "2026-06-21T16:00:00.000Z",
+      "home": "Spain",
+      "away": "Saudi Arabia",
+      "homeGoals": 4,
+      "awayGoals": 0,
+      "venue": "Atlanta"
+    },
+    {
+      "group": "G",
+      "kickoffUtc": "2026-06-21T19:00:00.000Z",
+      "home": "Belgium",
+      "away": "Iran",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "venue": "Los Angeles (Inglewood)"
+    },
+    {
+      "group": "H",
+      "kickoffUtc": "2026-06-21T22:00:00.000Z",
+      "home": "Uruguay",
+      "away": "Cape Verde",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "venue": "Miami (Miami Gardens)"
+    },
+    {
+      "group": "G",
+      "kickoffUtc": "2026-06-22T01:00:00.000Z",
+      "home": "New Zealand",
+      "away": "Egypt",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "venue": "Vancouver"
+    },
+    {
+      "group": "J",
+      "kickoffUtc": "2026-06-22T17:00:00.000Z",
+      "home": "Argentina",
+      "away": "Austria",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "venue": "Dallas (Arlington)"
+    },
+    {
+      "group": "I",
+      "kickoffUtc": "2026-06-22T21:00:00.000Z",
+      "home": "France",
+      "away": "Iraq",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "venue": "Philadelphia"
+    },
+    {
+      "group": "I",
+      "kickoffUtc": "2026-06-23T00:00:00.000Z",
+      "home": "Norway",
+      "away": "Senegal",
+      "homeGoals": 3,
+      "awayGoals": 2,
+      "venue": "New York/New Jersey (East Rutherford)"
+    },
+    {
+      "group": "J",
+      "kickoffUtc": "2026-06-23T03:00:00.000Z",
+      "home": "Jordan",
+      "away": "Algeria",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "venue": "San Francisco Bay Area (Santa Clara)"
+    },
+    {
+      "group": "K",
+      "kickoffUtc": "2026-06-23T17:00:00.000Z",
+      "home": "Portugal",
+      "away": "Uzbekistan",
+      "homeGoals": 5,
+      "awayGoals": 0,
+      "venue": "Houston"
+    },
+    {
+      "group": "L",
+      "kickoffUtc": "2026-06-23T20:00:00.000Z",
+      "home": "England",
+      "away": "Ghana",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "venue": "Boston (Foxborough)"
+    },
+    {
+      "group": "L",
+      "kickoffUtc": "2026-06-23T23:00:00.000Z",
+      "home": "Panama",
+      "away": "Croatia",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "venue": "Toronto"
+    },
+    {
+      "group": "K",
+      "kickoffUtc": "2026-06-24T02:00:00.000Z",
+      "home": "Colombia",
+      "away": "DR Congo",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "venue": "Guadalajara (Zapopan)"
+    },
+    {
+      "group": "B",
+      "kickoffUtc": "2026-06-24T19:00:00.000Z",
+      "home": "Switzerland",
+      "away": "Canada",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "venue": "Vancouver"
+    },
+    {
+      "group": "B",
+      "kickoffUtc": "2026-06-24T19:00:00.000Z",
+      "home": "Bosnia & Herzegovina",
+      "away": "Qatar",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "venue": "Seattle"
+    },
+    {
+      "group": "C",
+      "kickoffUtc": "2026-06-24T22:00:00.000Z",
+      "home": "Scotland",
+      "away": "Brazil",
+      "homeGoals": 0,
+      "awayGoals": 3,
+      "venue": "Miami (Miami Gardens)"
+    },
+    {
+      "group": "C",
+      "kickoffUtc": "2026-06-24T22:00:00.000Z",
+      "home": "Morocco",
+      "away": "Haiti",
+      "homeGoals": 4,
+      "awayGoals": 2,
+      "venue": "Atlanta"
+    },
+    {
+      "group": "A",
+      "kickoffUtc": "2026-06-25T01:00:00.000Z",
+      "home": "Czech Republic",
+      "away": "Mexico",
+      "homeGoals": 0,
+      "awayGoals": 3,
+      "venue": "Mexico City"
+    },
+    {
+      "group": "A",
+      "kickoffUtc": "2026-06-25T01:00:00.000Z",
+      "home": "South Africa",
+      "away": "South Korea",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "venue": "Monterrey (Guadalupe)"
+    },
+    {
+      "group": "E",
+      "kickoffUtc": "2026-06-25T20:00:00.000Z",
+      "home": "Curaçao",
+      "away": "Ivory Coast",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "venue": "Philadelphia"
+    },
+    {
+      "group": "E",
+      "kickoffUtc": "2026-06-25T20:00:00.000Z",
+      "home": "Ecuador",
+      "away": "Germany",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "venue": "New York/New Jersey (East Rutherford)"
+    },
+    {
+      "group": "F",
+      "kickoffUtc": "2026-06-25T23:00:00.000Z",
+      "home": "Japan",
+      "away": "Sweden",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "Dallas (Arlington)"
+    },
+    {
+      "group": "F",
+      "kickoffUtc": "2026-06-25T23:00:00.000Z",
+      "home": "Tunisia",
+      "away": "Netherlands",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "venue": "Kansas City"
+    },
+    {
+      "group": "D",
+      "kickoffUtc": "2026-06-26T02:00:00.000Z",
+      "home": "Turkey",
+      "away": "USA",
+      "homeGoals": 3,
+      "awayGoals": 2,
+      "venue": "Los Angeles (Inglewood)"
+    },
+    {
+      "group": "D",
+      "kickoffUtc": "2026-06-26T02:00:00.000Z",
+      "home": "Paraguay",
+      "away": "Australia",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "venue": "San Francisco Bay Area (Santa Clara)"
+    },
+    {
+      "group": "I",
+      "kickoffUtc": "2026-06-26T19:00:00.000Z",
+      "home": "Norway",
+      "away": "France",
+      "homeGoals": 1,
+      "awayGoals": 4,
+      "venue": "Boston (Foxborough)"
+    },
+    {
+      "group": "I",
+      "kickoffUtc": "2026-06-26T19:00:00.000Z",
+      "home": "Senegal",
+      "away": "Iraq",
+      "homeGoals": 5,
+      "awayGoals": 0,
+      "venue": "Toronto"
+    },
+    {
+      "group": "H",
+      "kickoffUtc": "2026-06-27T00:00:00.000Z",
+      "home": "Cape Verde",
+      "away": "Saudi Arabia",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "venue": "Houston"
+    },
+    {
+      "group": "H",
+      "kickoffUtc": "2026-06-27T00:00:00.000Z",
+      "home": "Uruguay",
+      "away": "Spain",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "venue": "Guadalajara (Zapopan)"
+    },
+    {
+      "group": "G",
+      "kickoffUtc": "2026-06-27T03:00:00.000Z",
+      "home": "Egypt",
+      "away": "Iran",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "venue": "Seattle"
+    },
+    {
+      "group": "G",
+      "kickoffUtc": "2026-06-27T03:00:00.000Z",
+      "home": "New Zealand",
+      "away": "Belgium",
+      "homeGoals": 1,
+      "awayGoals": 5,
+      "venue": "Vancouver"
+    },
+    {
+      "group": "L",
+      "kickoffUtc": "2026-06-27T21:00:00.000Z",
+      "home": "Panama",
+      "away": "England",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "venue": "New York/New Jersey (East Rutherford)"
+    },
+    {
+      "group": "L",
+      "kickoffUtc": "2026-06-27T21:00:00.000Z",
+      "home": "Croatia",
+      "away": "Ghana",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "venue": "Philadelphia"
+    },
+    {
+      "group": "K",
+      "kickoffUtc": "2026-06-27T23:30:00.000Z",
+      "home": "Colombia",
+      "away": "Portugal",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "venue": "Miami (Miami Gardens)"
+    },
+    {
+      "group": "K",
+      "kickoffUtc": "2026-06-27T23:30:00.000Z",
+      "home": "DR Congo",
+      "away": "Uzbekistan",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "venue": "Atlanta"
+    },
+    {
+      "group": "J",
+      "kickoffUtc": "2026-06-28T02:00:00.000Z",
+      "home": "Algeria",
+      "away": "Austria",
+      "homeGoals": 3,
+      "awayGoals": 3,
+      "venue": "Kansas City"
+    },
+    {
+      "group": "J",
+      "kickoffUtc": "2026-06-28T02:00:00.000Z",
+      "home": "Jordan",
+      "away": "Argentina",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "venue": "Dallas (Arlington)"
+    }
+  ]
+}

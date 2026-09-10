@@ -1,6 +1,6 @@
-import teamsJson from "../../public/data/teams.json";
-import matchesJson from "../../public/data/matches.json";
-import metaJson from "../../public/data/meta.json";
+import teamsJson from "../../public/data/2026/teams.json";
+import matchesJson from "../../public/data/2026/matches.json";
+import metaJson from "../../public/data/2026/meta.json";
 import type { TeamRow, MatchTeamRow, Meta } from "./types";
 import type { Scope } from "./scopes";
 

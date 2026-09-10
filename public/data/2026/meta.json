@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-09-10T22:01:49.652Z",
+  "tournament": "FIFA World Cup 2026",
+  "sources": [
+    {
+      "name": "FotMob — 2026 fixtures, statistics and momentum",
+      "url": "https://www.fotmob.com/leagues/77/fixtures/world-cup?season=2026"
+    },
+    {
+      "name": "World Bank — latest available observation through 2025",
+      "url": "https://data.worldbank.org/"
+    },
+    {
+      "name": "Open-Meteo — hourly venue weather reanalysis",
+      "url": "https://open-meteo.com/en/docs/historical-weather-api"
+    }
+  ],
+  "caveats": [
+    "Full 2026 tournament: 48 teams, 104 matches. Football statistics include extra time; shootout kicks are excluded from goals.",
+    "Correlation does not imply causation. Team-match rows share opponents and weather and are not independent observations.",
+    "Per-match rates reduce progression bias, but extra-time matches are longer than regulation matches.",
+    "Economic indicators use the latest available observation from 2020–2025; each team's observation years are recorded in the downloadable data.",
+    "England's economic indicators use a United Kingdom proxy. Scotland's economic indicators are unavailable and left null.",
+    "Weather is an outdoor reanalysis estimate at kickoff, not a measurement inside the stadium.",
+    "Waves use FotMob momentum. Added-time goals are positioned within the provider's fractional added-time intervals; goal labels retain the original minute."
+  ]
+}

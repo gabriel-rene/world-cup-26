@@ -1,13 +1,15 @@
 export interface TeamRow {
+  xg?: number | null;
+  indicatorYears?: Record<string, number | null>;
   teamId: number;
   name: string;
   iso3: string;
   goalsFor: number;
   goalsAgainst: number;
-  shots: number;
+  shots: number | null;
   passAccuracy: number | null;
   cards: number | null;
-  avgPossession: number;
+  avgPossession: number | null;
   matchesPlayed: number;
   population: number | null;
   gdp: number | null;
@@ -16,6 +18,8 @@ export interface TeamRow {
 }
 
 export interface MatchTeamRow {
+  xg?: number | null;
+  stage?: string;
   fixtureId: number;
   teamId: number;
   teamName: string;

@@ -26,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Nav />
         {children}
+        <footer className="site-footer"><span>Fun Correlations — An independent football data study.</span><a href="/about">Data, sources & limitations ↗</a></footer>
       </body>
     </html>
   );

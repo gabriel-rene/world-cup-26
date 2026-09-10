@@ -84,19 +84,20 @@ export function CorrelationCard({ title, rows, xVar, yVar, labelKey }: Correlati
       <p className="corr-meta">
         <span>{xVar.label} vs {yVar.label}</span>
         {!Number.isNaN(r) && <span className="stat">r = {r.toFixed(2)} · n = {n}</span>}
+        <span>{n} of {rows.length} observations</span>
         <span className={`verdict verdict-${verdict.tone}`}>{verdict.label}</span>
       </p>
       <div className="chart-box">
         <ResponsiveContainer>
           <ComposedChart margin={{ top: 8, right: 16, bottom: 24, left: 8 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" />
+            <CartesianGrid vertical={false} stroke="var(--line)" />
             <XAxis type="number" dataKey="x" name={xVar.label} tick={tick}
-              stroke="var(--line)" tickFormatter={(v) => xVar.format(Number(v))} />
+              stroke="var(--line)" tickFormatter={(v) => Math.abs(Number(v)) >= 10000 ? new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(Number(v)) : xVar.format(Number(v))} />
             <YAxis type="number" dataKey="y" name={yVar.label} tick={tick}
-              stroke="var(--line)" tickFormatter={(v) => yVar.format(Number(v))} />
+              stroke="var(--line)" tickFormatter={(v) => Math.abs(Number(v)) >= 10000 ? new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(Number(v)) : yVar.format(Number(v))} />
             <ZAxis range={[60, 60]} />
             <Tooltip content={renderTooltip} />
-            <Scatter data={points} fill="var(--chart-dot)">
+            <Scatter isAnimationActive={false} data={points} fill="var(--chart-dot)">
               <LabelList dataKey="flag" position="top" style={{ fontSize: 14 }} />
             </Scatter>
             {line.length === 2 && (
@@ -106,6 +107,8 @@ export function CorrelationCard({ title, rows, xVar, yVar, labelKey }: Correlati
           </ComposedChart>
         </ResponsiveContainer>
       </div>
+      <details className="chart-data"><summary>Inspect the data</summary><div className="table-scroll"><table className="stat-table"><thead><tr><th>Observation</th><th>{xVar.label}</th><th>{yVar.label}</th></tr></thead><tbody>{points.map((point, i) => <tr key={i}><td>{point.label}</td><td>{xVar.format(point.x)}</td><td>{yVar.format(point.y)}</td></tr>)}</tbody></table></div></details>
+      <div className="chart-caption"><span>Horizontal: {xVar.label}</span><span>Vertical: {yVar.label}</span></div>
     </section>
   );
 }

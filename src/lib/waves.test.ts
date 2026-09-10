@@ -3,12 +3,11 @@ import { getWaveMatches, getWaveMatch } from "./waves";
 import { flagEmoji } from "./flags";
 
 describe("getWaveMatches", () => {
-  it("returns the 4 showcase matches in chronological order", () => {
+  it("returns all 104 matches from 2026 in chronological order", () => {
     const ms = getWaveMatches();
-    expect(ms).toHaveLength(4);
-    expect(ms.map((m) => m.matchId)).toEqual([
-      "jpn-esp-group", "cro-bra-qf", "ned-arg-qf", "arg-fra-final",
-    ]);
+    expect(ms).toHaveLength(104);
+    expect(ms.every(m => m.kickoff.startsWith("2026-") && m.matchId.startsWith("2026-"))).toBe(true);
+    expect(ms.at(-1)?.stage).toBe("Final");
     const times = ms.map((m) => new Date(m.kickoff).getTime());
     expect([...times].sort((a, b) => a - b)).toEqual(times);
   });

@@ -12,7 +12,11 @@
     "ingest:football": "tsx ingestion/football.ts",
     "ingest:weather": "tsx ingestion/weather.ts",
     "ingest:waves": "tsx ingestion/fotmob.ts",
-    "build:snapshot": "tsx ingestion/build-snapshot.ts"
+    "build:snapshot": "tsx ingestion/build-snapshot.ts",
+    "ingest:2026": "node --import tsx ingestion/openfootball.ts",
+    "fetch:2026": "node --import tsx ingestion/fetch-2026.ts",
+    "enrich:2026": "node --import tsx ingestion/enrich-2026.ts",
+    "build:2026": "node --import tsx ingestion/build-2026.ts"
   },
   "dependencies": {
     "next": "^15.1.0",

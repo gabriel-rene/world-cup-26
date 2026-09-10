@@ -108,3 +108,13 @@ describe("buildTeams aggregates pass accuracy and cards", () => {
     expect(brazil.cards).toBeNull();
   });
 });
+
+describe("missing statistics", () => {
+  it("averages possession over measured matches, preserving unknowns", () => {
+    const partial = { ...inputs, fixtures: [...inputs.fixtures, { ...inputs.fixtures[0], fixtureId: 101 }] };
+    expect(buildTeams(partial)[0].avgPossession).toBe(60);
+    const [team] = buildTeams({ ...inputs, statsByFixture: {} });
+    expect(team.avgPossession).toBeNull();
+    expect(team.shots).toBeNull();
+  });
+});

@@ -55,10 +55,10 @@ The browser reads only versioned JSON in `public/data`. External APIs are
 called by local ingestion scripts, keeping credentials and rate limits out of
 the application runtime.
 
-The committed snapshot covers **FIFA World Cup 2022 in Qatar**, the latest
-complete tournament available to the original free data plan. The pipeline is
-season-parameterized through `WC_SEASON`, so it can move to 2026 when a
-compatible data source or plan is available.
+The active snapshot covers **all 104 matches and 48 nations of FIFA World Cup 2026**.
+Patterns, Explorer, Teams and Waves all use 2026 data, including xG, shots,
+possession, country indicators and kickoff weather. Original 2022 snapshots
+remain in the repository as an archive.
 
 ## Tech stack
 
@@ -90,42 +90,27 @@ npm run build  # create a production build
 The committed snapshot is enough to run the full application. No API key is
 required unless you want to rebuild the source data.
 
-## Rebuild the data
-
-Create a local `.env` file:
-
-```dotenv
-API_FOOTBALL_KEY=your_key_here
-```
-
-Then run the ingestion steps:
+## Rebuild the 2026 data
 
 ```bash
-npm run ingest:football
-npm run ingest:worldbank
-npm run ingest:weather
-npm run build:snapshot
+npm run fetch:2026       # FotMob public fixtures and match statistics
+npm run enrich:2026      # World Bank (through 2025) and kickoff weather
+npm run build:2026       # validate and produce the complete 2026 snapshots
 ```
 
-Momentum snapshots are configured separately in
-`ingestion/waves-config.ts` and generated with:
-
-```bash
-npm run ingest:waves
-```
-
-Raw responses are cached under the git-ignored `data/raw/` directory. The
-football ingestion process throttles requests and resumes from the cache after
-an interruption.
+Raw data is cached under `data/raw/2026/`. These steps resume from cache.
+No API key is needed. All 104 matches also power the Momentum Waves gallery.
+The original API-Football scripts remain for the 2022 archive; the configured
+free plan cannot access 2026.
 
 ## Data sources
 
 | Source | Used for |
 | --- | --- |
-| [API-Football](https://www.api-football.com/) | Teams, fixtures, and per-match statistics |
+| [API-Football](https://www.api-football.com/) | Archived 2022 data only |
 | [World Bank](https://data.worldbank.org/) | Population, GDP, GDP per capita, and land area |
 | [Open-Meteo](https://open-meteo.com/) | Venue weather at kickoff |
-| [FotMob](https://www.fotmob.com/) | Per-minute momentum for selected matches |
+| [FotMob](https://www.fotmob.com/) | 2026 fixtures, match statistics, xG and momentum for all 104 games |
 | [Fjelstul World Cup Database](https://github.com/jfjelstul/worldcup) | Historical tournaments for future expansion |
 
 ## Project structure
@@ -140,3 +125,12 @@ public/data/      Versioned application data
 
 Design decisions and implementation notes live in
 [`docs/superpowers`](docs/superpowers).
+
+## 2026 coverage and design assessment
+
+All core views use the full 2026 tournament. The separate `/2026` group-stage
+results view retains 72 OpenFootball results as a second source; automated
+checks compare their scores and kickoff times against the FotMob snapshot.
+
+See [the project assessment](docs/ASSESSMENT.md) for pipeline details,
+statistical limitations and prioritized improvements.

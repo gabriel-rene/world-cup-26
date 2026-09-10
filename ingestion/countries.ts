@@ -1,4 +1,7 @@
 export const COUNTRY_ISO3: Record<string, string> = {
+  Haiti: "HTI", Curacao: "CUW", "Curaçao": "CUW", "Cape Verde": "CPV",
+  "DR Congo": "COD", Jordan: "JOR", Czechia: "CZE", "Czech Republic": "CZE",
+  "Bosnia and Herzegovina": "BIH", "Bosnia & Herzegovina": "BIH", Turkiye: "TUR",
   // CONCACAF (hosts + qualifiers)
   USA: "USA", "United States": "USA", Canada: "CAN", Mexico: "MEX",
   "Costa Rica": "CRI", Jamaica: "JAM", Panama: "PAN", Honduras: "HND",

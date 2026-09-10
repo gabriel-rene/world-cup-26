@@ -6,6 +6,7 @@ import { getMeta } from "@/lib/snapshot";
 
 const LINKS = [
   { href: "/", label: "Feed" },
+  { href: "/2026", label: "World Cup 2026" },
   { href: "/explore", label: "Explorer" },
   { href: "/teams", label: "Teams" },
   { href: "/waves", label: "Waves" },
@@ -19,14 +20,14 @@ export function Nav() {
       <div className="site-header-inner">
         <Link href="/" className="wordmark">
           <span className="wordmark-title">Fun Correlations</span>
-          <span className="wordmark-tournament">{getMeta().tournament}</span>
+          <span className="wordmark-tournament">{pathname === "/2026" ? "FIFA World Cup 2026" : getMeta().tournament}</span>
         </Link>
         <nav className="site-nav" aria-label="Sections">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              aria-current={pathname === l.href ? "page" : undefined}
+              aria-current={(pathname === l.href || (l.href !== "/" && pathname.startsWith(`${l.href}/`))) ? "page" : undefined}
             >
               {l.label}
             </Link>

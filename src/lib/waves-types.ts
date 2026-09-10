@@ -10,6 +10,7 @@ export interface MomentumPoint {
 }
 
 export interface WaveGoal {
+  displayMinute?: string;
   minute: number;
   side: "home" | "away";
   player: string;

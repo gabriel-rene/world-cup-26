@@ -33,7 +33,7 @@ export function PlaybackControls({
           type="range"
           min={0}
           max={totalMinutes}
-          step={0.1}
+          step="any"
           value={minute}
           aria-label="Match minute"
           onChange={(event) => onScrub(Number(event.target.value))}

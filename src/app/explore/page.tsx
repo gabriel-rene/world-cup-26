@@ -50,7 +50,7 @@ function Explorer() {
     <>
       <h1 className="page-title">Explorer</h1>
       <p className="page-sub">
-        Pick any two variables — the link in your address bar always points at
+        Compare 2026 football, country and weather data. The link in your address bar points at
         what you&apos;re seeing.
       </p>
       <VariablePicker

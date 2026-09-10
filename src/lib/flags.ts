@@ -1,6 +1,7 @@
 // ISO 3166 alpha-3 -> alpha-2 for nations that may appear in the snapshot.
 // Stable reference data; unrelated to who actually qualified.
 const ISO3_TO_ISO2: Record<string, string> = {
+  HTI: "HT", CUW: "CW", CPV: "CV", COD: "CD", JOR: "JO", CZE: "CZ", BIH: "BA",
   // CONCACAF (incl. hosts)
   USA: "US", CAN: "CA", MEX: "MX", CRI: "CR", JAM: "JM", PAN: "PA", HND: "HN",
   // CONMEBOL
@@ -24,6 +25,8 @@ const REGIONAL_INDICATOR_A = 0x1f1e6; // 🇦
 const PLACEHOLDER = "🏳️";
 
 export function flagEmoji(iso3: string): string {
+  if (iso3 === "SCO") return "🏴\u{E0067}\u{E0062}\u{E0073}\u{E0063}\u{E0074}\u{E007F}";
+  if (iso3 === "ENG") return "🏴\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}";
   const iso2 = ISO3_TO_ISO2[(iso3 ?? "").trim().toUpperCase()];
   if (!iso2) return PLACEHOLDER;
   const codePoints = [...iso2].map(

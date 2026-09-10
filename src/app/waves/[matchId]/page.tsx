@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { WavePortrait } from "@/components/waves/WavePortrait";
-import { getWaveMatch, getWaveMatches } from "@/lib/waves";
+import { getWaveMatch, getWaveMatches, getArchivedWaveMatches } from "@/lib/waves";
 
 export function generateStaticParams() {
-  return getWaveMatches().map((match) => ({ matchId: match.matchId }));
+  return [...getWaveMatches(), ...getArchivedWaveMatches()].map((match) => ({ matchId: match.matchId }));
 }
 
 export async function generateMetadata({

@@ -1,25 +1,24 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import WavesPage from "./page";
 
 describe("/waves gallery", () => {
-  it("lists all 4 showcase matches as links", () => {
+  it("lists all 104 2026 matches and filters by team", () => {
     render(<WavesPage />);
-    const links = screen
-      .getAllByRole("link")
-      .filter((link) => link.getAttribute("href")?.startsWith("/waves/"));
-    expect(links.map((link) => link.getAttribute("href"))).toEqual([
-      "/waves/jpn-esp-group",
-      "/waves/cro-bra-qf",
-      "/waves/ned-arg-qf",
-      "/waves/arg-fra-final",
-    ]);
+    const links = () => screen.getAllByRole("link").filter(link => link.getAttribute("href")?.startsWith("/waves/"));
+    expect(links()).toHaveLength(104);
+    fireEvent.change(screen.getByLabelText("Find a team"), { target: { value: "Mexico" } });
+    expect(links().length).toBeGreaterThanOrEqual(3);
+    expect(links().every(link => link.textContent?.includes("Mexico"))).toBe(true);
+    fireEvent.change(screen.getByLabelText("Tournament stage"), { target: { value: "Final" } });
+    expect(screen.getByText(/No matches found/)).toBeInTheDocument();
   });
 
-  it("shows real scores and shootout results", () => {
+  it("filters to the actual 2026 final", () => {
     render(<WavesPage />);
-    expect(screen.getByText(/Japan v Spain/)).toBeInTheDocument();
-    expect(screen.getAllByText(/pens/)).toHaveLength(3);
+    fireEvent.change(screen.getByLabelText("Tournament stage"), { target: { value: "Final" } });
+    expect(screen.getByText("Spain v Argentina")).toBeInTheDocument();
+    expect(screen.getByText(/1 of 104 matches/)).toBeInTheDocument();
   });
 
   it("links to the methodology", () => {

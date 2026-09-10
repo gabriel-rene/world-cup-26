@@ -52,13 +52,12 @@ export function SortableTable({ rows, columns }: SortableTableProps) {
     <table className="stat-table">
       <thead>
         <tr>
-          <th style={{ textAlign: "left" }} onClick={() => onSort(NAME_KEY)}>
-            Nation{arrow(NAME_KEY)}
+          <th style={{ textAlign: "left" }} aria-sort={sortKey === NAME_KEY ? (sortDir === "asc" ? "ascending" : "descending") : "none"} onClick={() => onSort(NAME_KEY)}>
+            <button type="button">Nation{arrow(NAME_KEY)}</button>
           </th>
           {columns.map((c) => (
-            <th key={c.key} className="num" onClick={() => onSort(c.key)}>
-              {c.label}
-              {arrow(c.key)}
+            <th key={c.key} className="num" aria-sort={sortKey === c.key ? (sortDir === "asc" ? "ascending" : "descending") : "none"} onClick={() => onSort(c.key)}>
+              <button type="button">{c.label}{arrow(c.key)}</button>
             </th>
           ))}
         </tr>

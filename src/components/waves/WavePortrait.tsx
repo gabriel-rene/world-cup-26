@@ -44,6 +44,7 @@ export function WavePortrait({ match }: { match: WaveMatch }) {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "UTC",
   });
 
   return (
@@ -79,6 +80,8 @@ export function WavePortrait({ match }: { match: WaveMatch }) {
       />
 
       <footer className="waves-meta">
+        <p><a href="/waves">← All 2026 matches</a></p>
+        {match.goals.length > 0 && <details className="chart-data"><summary>Goal timeline</summary><ol>{match.goals.map((goal, i) => <li key={i}>{goal.displayMinute ?? goal.minute}′ · {goal.player} · {goal.scoreAfter.join("–")}</li>)}</ol></details>}
         <p>
           {match.stage} · {kickoffDate} · {match.venue} · Full-time {match.score[0]}–
           {match.score[1]}
@@ -88,7 +91,7 @@ export function WavePortrait({ match }: { match: WaveMatch }) {
         </p>
         <p className="fine">
           Momentum data via <a href="https://www.fotmob.com">FotMob</a>. The tide is a smoothed
-          interpretation of per-minute momentum—the shape of the match, not a literal replay.
+          interpretation of per-minute momentum—the shape of the match, not a literal replay. Added time is compressed into fractional intervals on the timeline; goal labels show the original minute.
         </p>
       </footer>
     </main>

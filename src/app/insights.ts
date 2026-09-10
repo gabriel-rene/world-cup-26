@@ -9,14 +9,14 @@ export interface Insight {
 }
 
 export const INSIGHTS: Insight[] = [
-  { title: "Do richer nations score more?", scope: "team", xKey: "gdpPerCapita", yKey: "goalsFor" },
-  { title: "Bigger countries, more goals?", scope: "team", xKey: "population", yKey: "goalsFor" },
-  { title: "Does the heat kill possession?", scope: "match", xKey: "temperatureC", yKey: "possession" },
-  { title: "More possession, more shots?", scope: "match", xKey: "possession", yKey: "shots" },
-  { title: "Bigger country, longer passes?", scope: "team", xKey: "landArea", yKey: "passAccuracy" },
-  { title: "Do richer nations play cleaner?", scope: "team", xKey: "gdpPerCapita", yKey: "cards" },
+  { title: "Do better chances become goals?", scope: "match", xKey: "xg", yKey: "goals" },
+  { title: "Does possession produce more shots?", scope: "match", xKey: "possession", yKey: "shots" },
+  { title: "Do richer nations score more per match?", scope: "team", xKey: "gdpPerCapita", yKey: "goalsPerMatch" },
+  { title: "More people, better chances?", scope: "team", xKey: "population", yKey: "xgPerMatch" },
+  { title: "Does heat change shot volume?", scope: "match", xKey: "temperatureC", yKey: "shots" },
+  { title: "Accurate passes, more shots?", scope: "team", xKey: "passAccuracy", yKey: "shotsPerMatch" },
   { title: "Goals gone with the wind?", scope: "match", xKey: "windKph", yKey: "goals" },
-  { title: "Sweaty palms, fewer shots?", scope: "match", xKey: "humidity", yKey: "shots" },
+  { title: "Does humidity change scoring?", scope: "match", xKey: "humidity", yKey: "goals" },
 ];
 
 export function resolveInsight(i: Insight) {
